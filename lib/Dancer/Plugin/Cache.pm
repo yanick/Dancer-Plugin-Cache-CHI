@@ -23,13 +23,20 @@ In your application:
     use Dancer ':syntax';
     use Dancer::Plugin::Cache;
 
+    # caching pages' response
+    
+    check_page_cache;
+
+    get '/cache_me' => sub {
+        cache_page template 'foo';
+    };
+
+    # using the cache directly
+
     get '/something' => sub {
-        my $thingy = cache->get( 'thingy' );
+        my $thingy = cache->compute( 'thingy', sub { compute_thingy() } );
 
-        unless ( $thingy ) {
-            cache->set( 'thingy', $thingy = compute_thingy() );
-        }
-
+        return template 'foo' => { thingy => $thingy };
     };
 
 =head1 DESCRIPTION

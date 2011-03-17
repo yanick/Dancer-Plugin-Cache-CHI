@@ -2,5 +2,7 @@ Revision history for Dancer::Plugin::Cache
 
 {{$NEXT}}
 
+0.1.0     2011-03-16 20:47:53 America/Montreal
+
     - Initial release, unleashed unto an unsuspecting world.
 

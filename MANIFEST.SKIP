@@ -6,3 +6,4 @@ bak$
 tmp$
 \.prove
 MANIFEST.SKIP
+Dancer-Plugin-Cache

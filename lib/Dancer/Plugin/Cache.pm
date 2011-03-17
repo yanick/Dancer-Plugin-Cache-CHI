@@ -1,5 +1,5 @@
 package Dancer::Plugin::Cache;
-# ABSTRACT: Cache response content (and anything else)
+# ABSTRACT: Dancer plugin to cache response content (and anything else)
 
 use strict;
 use warnings;

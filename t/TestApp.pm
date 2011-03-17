@@ -1,4 +1,5 @@
-package TestApp;
+package
+    TestApp;
 
 use strict;
 use warnings;

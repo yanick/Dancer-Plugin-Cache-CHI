@@ -1,4 +1,10 @@
 package Dancer::Plugin::Cache;
+BEGIN {
+  $Dancer::Plugin::Cache::AUTHORITY = 'cpan:yanick';
+}
+BEGIN {
+  $Dancer::Plugin::Cache::VERSION = '0.1.0';
+}
 # ABSTRACT: Dancer plugin to cache response content (and anything else)
 
 use strict;
@@ -8,6 +14,40 @@ use Dancer ':syntax';
 use Dancer::Plugin;
 
 use CHI;
+
+
+my $cache;
+register cache => sub {
+    return $cache ||= CHI->new(%{ plugin_setting() });
+};
+
+
+register check_page_cache => sub {
+    before sub {
+        halt cache()->get(request->{path_info});
+    };  
+};
+
+
+register cache_page => sub {
+    return cache()->set( request->{path_info}, @_ );
+};
+
+register_plugin;
+
+1;
+
+
+
+=pod
+
+=head1 NAME
+
+Dancer::Plugin::Cache - Dancer plugin to cache response content (and anything else)
+
+=head1 VERSION
+
+version 0.1.0
 
 =head1 SYNOPSIS
 
@@ -58,13 +98,6 @@ will create a cache object equivalent to
 
 Returns the L<CHI> cache object.
 
-=cut
-
-my $cache;
-register cache => sub {
-    return $cache ||= CHI->new(%{ plugin_setting() });
-};
-
 =head2 check_page_cache
 
 If invoked, returns the cached response of a route, if available.
@@ -73,30 +106,10 @@ The C<path_info> attribute of the request is used as the key for the route,
 so the same route requested with different parameters will yield the same
 cached content. Caveat emptor.
 
-=cut
-
-register check_page_cache => sub {
-    before sub {
-        halt cache()->get(request->{path_info});
-    };  
-};
-
 =head2 cache_page($content, $expiration)
 
 Caches the I<$content> to be served to subsequent requests. The I<$expiration>
 parameter is optional.
-
-=cut
-
-register cache_page => sub {
-    return cache()->set( request->{path_info}, @_ );
-};
-
-register_plugin;
-
-1;
-
-__END__
 
 =head1 SEE ALSO
 
@@ -104,4 +117,19 @@ Dancer Web Framework - L<Dancer>
 
 L<Dancer::Plugin::Memcached> - plugin that heavily inspired this one.
 
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
 =cut
+
+
+__END__
+

@@ -1,0 +1,35 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.64.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 76a32786520ed034cd986efe3812435975324896 Build.PL
+SHA1 4a4c2be57576e474c5198b254d9f1e55a063b4fe Changes
+SHA1 59da7efc4d54fec3810ae9f44a59eb3ee7139957 LICENSE
+SHA1 f7dc029808d80a6e1eb87b8faa263c48863fe132 MANIFEST
+SHA1 806e196159d88518cc773582a1b73eb6f7d1e411 META.json
+SHA1 08b424674efaed5c9065b5782684da4297d4d531 META.yml
+SHA1 e967524a43e6b69f76ba65fb64b58f8fa5c548ee README
+SHA1 e68f19b13304fb5c634b8e17d4a35323fe524204 README.mkdn
+SHA1 b978343b84225c855c5531456ac9745f14594812 lib/Dancer/Plugin/Cache.pm
+SHA1 050aa113e828a52db3c86065c0c0ed50198b7ce8 t/000-report-versions.t
+SHA1 f91067dbf5932055811d24df63b15665ca62192b t/TestApp.pm
+SHA1 028638e1ed5af944107bb38330399e736279bf6d t/basic.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAk2BWj8ACgkQ34Hwf+GwC4xjAACeP6lI9NY0VTrOvTtGszKGSYH2
+TD8An0crrVSY+zLCmL1X5+G1nUp9s3bl
+=ruOY
+-----END PGP SIGNATURE-----

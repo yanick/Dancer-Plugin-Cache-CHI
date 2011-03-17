@@ -1,0 +1,76 @@
+NAME
+    Dancer::Plugin::Cache - Dancer plugin to cache response content (and
+    anything else)
+
+VERSION
+    version 0.1.0
+
+SYNOPSIS
+    In your configuration:
+
+        plugins:
+            Cache:
+                driver: Memory
+                global: 1
+
+    In your application:
+
+        use Dancer ':syntax';
+        use Dancer::Plugin::Cache;
+
+        # caching pages' response
+    
+        check_page_cache;
+
+        get '/cache_me' => sub {
+            cache_page template 'foo';
+        };
+
+        # using the cache directly
+
+        get '/something' => sub {
+            my $thingy = cache->compute( 'thingy', sub { compute_thingy() } );
+
+            return template 'foo' => { thingy => $thingy };
+        };
+
+DESCRIPTION
+    This plugin provides Dancer with an interface to a CHI cache. Also, it
+    includes a mechanism to easily cache the response of routes.
+
+CONFIGURATION
+    The plugin's configuration is passed directly to the CHI object's
+    constructor. For example, the configuration given in the "SYNOPSIS" will
+    create a cache object equivalent to
+
+        $cache = CHI->new( driver => 'Memory', global => 1, );
+
+KEYWORDS
+  cache
+    Returns the CHI cache object.
+
+  check_page_cache
+    If invoked, returns the cached response of a route, if available.
+
+    The "path_info" attribute of the request is used as the key for the
+    route, so the same route requested with different parameters will yield
+    the same cached content. Caveat emptor.
+
+  cache_page($content, $expiration)
+    Caches the *$content* to be served to subsequent requests. The
+    *$expiration* parameter is optional.
+
+SEE ALSO
+    Dancer Web Framework - Dancer
+
+    Dancer::Plugin::Memcached - plugin that heavily inspired this one.
+
+AUTHOR
+    Yanick Champoux <yanick@cpan.org>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2011 by Yanick Champoux.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+

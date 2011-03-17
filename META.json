@@ -1,0 +1,66 @@
+{
+   "abstract" : "Dancer plugin to cache response content (and anything else)",
+   "author" : [
+      "Yanick Champoux <yanick@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.102345, CPAN::Meta::Converter version 2.101590",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Dancer-Plugin-Cache",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "CHI" : 0,
+            "Dancer" : 0,
+            "Dancer::Plugin" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Carp" : 0,
+            "Dancer::Test" : 0,
+            "Scalar::Util" : 0,
+            "Test::More" : "0.94",
+            "perl" : "5.004"
+         }
+      }
+   },
+   "provides" : {
+      "Dancer::Plugin::Cache" : {
+         "file" : "lib/Dancer/Plugin/Cache.pm",
+         "version" : "v0.1.0"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-dancer-plugin-cache at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Dancer-Plugin-Cache"
+      },
+      "homepage" : "http://search.cpan.org/dist/Dancer-Plugin-Cache/",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/yanick/Dancer-Plugin-Cache.git",
+         "web" : "http://github.com/yanick/Dancer-Plugin-Cache/tree"
+      }
+   },
+   "version" : "0.1.0",
+   "x_authority" : "cpan:yanick"
+}
+

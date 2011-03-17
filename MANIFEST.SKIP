@@ -1,9 +1,0 @@
-project.vim
-dist.ini
-^Test-Wrapper.*
-~$
-bak$
-tmp$
-\.prove
-MANIFEST.SKIP
-Dancer-Plugin-Cache

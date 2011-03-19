@@ -31,6 +31,20 @@ In your application:
         cache_page template 'foo';
     };
 
+    # using the helper functions
+
+    get '/clear' => sub {
+        cache_clear;
+    };
+
+    put '/stash' => sub {
+        cache_set secret_stash => request->body;
+    };
+
+    get '/stash' => sub {
+        return cache_get 'secret_stash';
+    };
+
     # using the cache directly
 
     get '/something' => sub {
@@ -91,6 +105,23 @@ parameter is optional.
 register cache_page => sub {
     return cache()->set( request->{path_info}, @_ );
 };
+
+=head2 cache_set, cache_get, cache_clear, cache_compute
+
+Shortcut to the cache's object methods.
+
+    get '/cache/:attr/:value' => sub {
+        # equivalent to cache->set( ... );
+        cache_set $params->{attr} => $params->{value};
+    };
+
+=cut 
+
+for my $method ( qw/ set get clear compute / ) {
+    register 'cache_'.$method => sub {
+        return cache()->$method( @_ );
+    }
+}
 
 register_plugin;
 

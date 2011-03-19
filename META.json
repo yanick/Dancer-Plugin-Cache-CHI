@@ -44,7 +44,7 @@
    "provides" : {
       "Dancer::Plugin::Cache" : {
          "file" : "lib/Dancer/Plugin/Cache.pm",
-         "version" : "v0.1.0"
+         "version" : "v0.2.0"
       }
    },
    "release_status" : "stable",
@@ -60,7 +60,7 @@
          "web" : "http://github.com/yanick/Dancer-Plugin-Cache/tree"
       }
    },
-   "version" : "0.1.0",
+   "version" : "0.2.0",
    "x_authority" : "cpan:yanick"
 }
 

@@ -3,7 +3,7 @@ NAME
     anything else)
 
 VERSION
-    version 0.1.0
+    version 0.2.0
 
 SYNOPSIS
     In your configuration:
@@ -24,6 +24,20 @@ SYNOPSIS
 
         get '/cache_me' => sub {
             cache_page template 'foo';
+        };
+
+        # using the helper functions
+
+        get '/clear' => sub {
+            cache_clear;
+        };
+
+        put '/stash' => sub {
+            cache_set secret_stash => request->body;
+        };
+
+        get '/stash' => sub {
+            return cache_get 'secret_stash';
         };
 
         # using the cache directly
@@ -59,6 +73,14 @@ KEYWORDS
   cache_page($content, $expiration)
     Caches the *$content* to be served to subsequent requests. The
     *$expiration* parameter is optional.
+
+  cache_set, cache_get, cache_clear, cache_compute
+    Shortcut to the cache's object methods.
+
+        get '/cache/:attr/:value' => sub {
+            # equivalent to cache->set( ... );
+            cache_set $params->{attr} => $params->{value};
+        };
 
 SEE ALSO
     Dancer Web Framework - Dancer

@@ -9,7 +9,7 @@ use TestApp;
 
 use Dancer::Test;
 
-plan tests => 8;
+plan tests => 14;
 
 response_status_is [ 'GET', '/set/foo/bar' ], 200, '/set/foo/bar';
 
@@ -26,3 +26,16 @@ response_content_is [ 'GET', '/cached' ], 2, '/cached (cached!)';
 response_status_is [ 'GET', '/clear' ], 200, '/clear';
 
 response_content_is [ 'GET', '/cached' ], 3, '/cached (cleared)';
+
+my $secret = 'flamingo';
+my $resp = dancer_response PUT => '/stash', { body => $secret };
+
+is $resp->status => 200, 'secret stashed';
+
+response_content_is [ GET => '/stash' ], $secret, 'secret retrieved';
+
+response_content_is [ GET => '/compute' ], 'aab', '/compute, first';
+response_content_is [ GET => '/compute' ], 'aab', '/compute, cached';
+response_status_is [ GET => '/clear' ], 200, '/clear cache';
+response_content_is [ GET => '/compute' ], 'aac', '/compute, again';
+

@@ -3,7 +3,7 @@ BEGIN {
   $Dancer::Plugin::Cache::AUTHORITY = 'cpan:yanick';
 }
 BEGIN {
-  $Dancer::Plugin::Cache::VERSION = '0.1.0';
+  $Dancer::Plugin::Cache::VERSION = '0.2.0';
 }
 # ABSTRACT: Dancer plugin to cache response content (and anything else)
 
@@ -33,6 +33,13 @@ register cache_page => sub {
     return cache()->set( request->{path_info}, @_ );
 };
 
+
+for my $method ( qw/ set get clear compute / ) {
+    register 'cache_'.$method => sub {
+        return cache()->$method( @_ );
+    }
+}
+
 register_plugin;
 
 1;
@@ -47,7 +54,7 @@ Dancer::Plugin::Cache - Dancer plugin to cache response content (and anything el
 
 =head1 VERSION
 
-version 0.1.0
+version 0.2.0
 
 =head1 SYNOPSIS
 
@@ -69,6 +76,20 @@ In your application:
 
     get '/cache_me' => sub {
         cache_page template 'foo';
+    };
+
+    # using the helper functions
+
+    get '/clear' => sub {
+        cache_clear;
+    };
+
+    put '/stash' => sub {
+        cache_set secret_stash => request->body;
+    };
+
+    get '/stash' => sub {
+        return cache_get 'secret_stash';
     };
 
     # using the cache directly
@@ -110,6 +131,15 @@ cached content. Caveat emptor.
 
 Caches the I<$content> to be served to subsequent requests. The I<$expiration>
 parameter is optional.
+
+=head2 cache_set, cache_get, cache_clear, cache_compute
+
+Shortcut to the cache's object methods.
+
+    get '/cache/:attr/:value' => sub {
+        # equivalent to cache->set( ... );
+        cache_set $params->{attr} => $params->{value};
+    };
 
 =head1 SEE ALSO
 

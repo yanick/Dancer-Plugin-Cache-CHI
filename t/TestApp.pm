@@ -12,11 +12,11 @@ set plugins => {
 };
 
 get '/set/:attribute/:value' => sub {
-    cache->set( params->{attribute}, params->{value} );
+    cache_set params->{attribute} => params->{value};
 };
 
 get '/get/:attribute' => sub {
-    cache->get( params->{attribute} );
+    return cache_get params->{attribute};
 };
 
 my $counter;
@@ -29,7 +29,20 @@ get '/check_page_cache' => sub {
 };
 
 get '/clear' => sub {
-    cache->clear;
+    cache_clear;
+};
+
+put '/stash' => sub {
+    return cache_set secret_stash => request->body;
+};
+
+get '/stash' => sub {
+    return cache_get 'secret_stash';
+};
+
+my $computed = 'aaa';
+get '/compute' => sub {
+    return cache_compute compute => sub { ++$computed };
 };
 
 1;

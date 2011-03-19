@@ -1,5 +1,9 @@
 Revision history for Dancer::Plugin::Cache
 
+0.2.0     2011-03-19 14:37:06 America/Montreal
+    - Add cache helper functions. Thanks to David Precious for the
+      suggestion. [RT#66714]
+
 0.1.0     2011-03-16 20:47:53 America/Montreal
 
     - Initial release, unleashed unto an unsuspecting world.

@@ -22,14 +22,14 @@ my %module_build_args = (
     'Yanick Champoux <yanick@cpan.org>'
   ],
   'dist_name' => 'Dancer-Plugin-Cache',
-  'dist_version' => '0.2.0',
+  'dist_version' => '0.2.1',
   'license' => 'perl',
   'module_name' => 'Dancer::Plugin::Cache',
   'recommends' => {},
   'recursive_test_files' => 1,
   'requires' => {
     'CHI' => '0',
-    'Dancer' => '0',
+    'Dancer' => '1.1904',
     'Dancer::Plugin' => '0'
   },
   'script_files' => []

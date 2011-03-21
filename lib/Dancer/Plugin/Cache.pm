@@ -3,14 +3,14 @@ BEGIN {
   $Dancer::Plugin::Cache::AUTHORITY = 'cpan:yanick';
 }
 BEGIN {
-  $Dancer::Plugin::Cache::VERSION = '0.2.0';
+  $Dancer::Plugin::Cache::VERSION = '0.2.1';
 }
 # ABSTRACT: Dancer plugin to cache response content (and anything else)
 
 use strict;
 use warnings;
 
-use Dancer ':syntax';
+use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
 
 use CHI;
@@ -54,7 +54,7 @@ Dancer::Plugin::Cache - Dancer plugin to cache response content (and anything el
 
 =head1 VERSION
 
-version 0.2.0
+version 0.2.1
 
 =head1 SYNOPSIS
 

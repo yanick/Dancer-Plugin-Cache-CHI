@@ -4,7 +4,7 @@ Dancer::Plugin::Cache - Dancer plugin to cache response content (and anything el
 
 # VERSION
 
-version 0.2.0
+version 0.2.1
 
 # SYNOPSIS
 

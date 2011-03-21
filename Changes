@@ -1,6 +1,7 @@
 Revision history for Dancer::Plugin::Cache
 
 {{$NEXT}}
+    - Requires Dancer > 1.150
 
 0.2.0     2011-03-19 14:37:06 America/Montreal
     - Add cache helper functions. Thanks to David Precious for the

@@ -4,7 +4,7 @@ package Dancer::Plugin::Cache;
 use strict;
 use warnings;
 
-use Dancer ':syntax';
+use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
 
 use CHI;

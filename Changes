@@ -1,6 +1,8 @@
 Revision history for Dancer::Plugin::Cache
 
 {{$NEXT}}
+
+0.2.1     2011-03-20 23:19:49 America/Montreal
     - Requires Dancer > 1.150
 
 0.2.0     2011-03-19 14:37:06 America/Montreal

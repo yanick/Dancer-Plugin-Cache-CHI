@@ -1,6 +1,7 @@
-Revision history for Dancer::Plugin::Cache
+Revision history for Dancer::Plugin::Cache::CHI
 
 {{$NEXT}}
+    - Re-brand the dist as Dancer::Plugin::Cache::CHI.
 
 0.2.2     2011-04-02 19:04:42 America/Montreal
     - Dancer::Plugin::Cache deprecated in favor of

@@ -1,22 +1,22 @@
 NAME
-    Dancer::Plugin::Cache - Dancer plugin to cache response content (and
-    anything else) [DEPRECATED]
+    Dancer::Plugin::Cache::CHI - Dancer plugin to cache response content
+    (and anything else)
 
 VERSION
-    version 0.2.2
+    version 1.0.0
 
 SYNOPSIS
     In your configuration:
 
         plugins:
-            Cache:
+            'Cache::CHI':
                 driver: Memory
                 global: 1
 
     In your application:
 
         use Dancer ':syntax';
-        use Dancer::Plugin::Cache;
+        use Dancer::Plugin::Cache::CHI;
 
         # caching pages' response
     
@@ -49,8 +49,6 @@ SYNOPSIS
         };
 
 DESCRIPTION
-    DEPRECATED: this module has been renamed to Dancer::Plugin::Cache::CHI.
-
     This plugin provides Dancer with an interface to a CHI cache. Also, it
     includes a mechanism to easily cache the response of routes.
 
@@ -86,8 +84,6 @@ KEYWORDS
 
 SEE ALSO
     Dancer Web Framework - Dancer
-
-    Dancer::Plugin::Cache::CHI - the new incarnation of this module.
 
     Dancer::Plugin::Memcached - plugin that heavily inspired this one.
 

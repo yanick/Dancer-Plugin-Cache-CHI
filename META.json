@@ -1,5 +1,5 @@
 {
-   "abstract" : "Dancer plugin to cache response content (and anything else) [DEPRECATED]",
+   "abstract" : "Dancer plugin to cache response content (and anything else)",
    "author" : [
       "Yanick Champoux <yanick@cpan.org>"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Dancer-Plugin-Cache",
+   "name" : "Dancer-Plugin-Cache-CHI",
    "prereqs" : {
       "build" : {
          "requires" : {
@@ -42,25 +42,25 @@
       }
    },
    "provides" : {
-      "Dancer::Plugin::Cache" : {
-         "file" : "lib/Dancer/Plugin/Cache.pm",
-         "version" : "v0.2.2"
+      "Dancer::Plugin::Cache::CHI" : {
+         "file" : "lib/Dancer/Plugin/Cache/CHI.pm",
+         "version" : "v1.0.0"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "mailto" : "bug-dancer-plugin-cache at rt.cpan.org",
-         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Dancer-Plugin-Cache"
+         "mailto" : "bug-dancer-plugin-cache-chi at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Dancer-Plugin-Cache-CHI"
       },
-      "homepage" : "http://search.cpan.org/dist/Dancer-Plugin-Cache/",
+      "homepage" : "http://search.cpan.org/dist/Dancer-Plugin-Cache-CHI/",
       "repository" : {
          "type" : "git",
          "url" : "git://github.com/yanick/Dancer-Plugin-Cache.git",
          "web" : "http://github.com/yanick/Dancer-Plugin-Cache/tree"
       }
    },
-   "version" : "0.2.2",
+   "version" : "1.0.0",
    "x_authority" : "cpan:yanick"
 }
 

@@ -17,14 +17,14 @@ my %module_build_args = (
   'configure_requires' => {
     'Module::Build' => '0.3601'
   },
-  'dist_abstract' => 'Dancer plugin to cache response content (and anything else) [DEPRECATED]',
+  'dist_abstract' => 'Dancer plugin to cache response content (and anything else)',
   'dist_author' => [
     'Yanick Champoux <yanick@cpan.org>'
   ],
-  'dist_name' => 'Dancer-Plugin-Cache',
-  'dist_version' => '0.2.2',
+  'dist_name' => 'Dancer-Plugin-Cache-CHI',
+  'dist_version' => '1.0.0',
   'license' => 'perl',
-  'module_name' => 'Dancer::Plugin::Cache',
+  'module_name' => 'Dancer::Plugin::Cache::CHI',
   'recommends' => {},
   'recursive_test_files' => 1,
   'requires' => {

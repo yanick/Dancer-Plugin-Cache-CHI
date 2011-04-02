@@ -5,10 +5,10 @@ use strict;
 use warnings;
 
 use Dancer ':syntax';
-use Dancer::Plugin::Cache;
+use Dancer::Plugin::Cache::CHI;
 
 set plugins => {
-    Cache => { driver => 'Memory', global => 1, expires_in => '1 min' },
+    'Cache::CHI' => { driver => 'Memory', global => 1, expires_in => '1 min' },
 };
 
 get '/set/:attribute/:value' => sub {

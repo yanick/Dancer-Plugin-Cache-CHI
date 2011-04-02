@@ -1,11 +1,11 @@
-package Dancer::Plugin::Cache;
+package Dancer::Plugin::Cache::CHI;
 BEGIN {
-  $Dancer::Plugin::Cache::AUTHORITY = 'cpan:yanick';
+  $Dancer::Plugin::Cache::CHI::AUTHORITY = 'cpan:yanick';
 }
 BEGIN {
-  $Dancer::Plugin::Cache::VERSION = '0.2.2';
+  $Dancer::Plugin::Cache::CHI::VERSION = '1.0.0';
 }
-# ABSTRACT: Dancer plugin to cache response content (and anything else) [DEPRECATED]
+# ABSTRACT: Dancer plugin to cache response content (and anything else)
 
 use strict;
 use warnings;
@@ -14,9 +14,6 @@ use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
 
 use CHI;
-
-warn "Dancer::Plugin::Cache is deprecated, ",
-     "use Dancer::Plugin::Cache::CHI instead\n";
 
 
 my $cache;
@@ -45,33 +42,31 @@ for my $method ( qw/ set get clear compute / ) {
 
 register_plugin;
 
-1;
-
 
 
 =pod
 
 =head1 NAME
 
-Dancer::Plugin::Cache - Dancer plugin to cache response content (and anything else) [DEPRECATED]
+Dancer::Plugin::Cache::CHI - Dancer plugin to cache response content (and anything else)
 
 =head1 VERSION
 
-version 0.2.2
+version 1.0.0
 
 =head1 SYNOPSIS
 
 In your configuration:
 
     plugins:
-        Cache:
+        'Cache::CHI':
             driver: Memory
             global: 1
 
 In your application:
 
     use Dancer ':syntax';
-    use Dancer::Plugin::Cache;
+    use Dancer::Plugin::Cache::CHI;
 
     # caching pages' response
     
@@ -104,8 +99,6 @@ In your application:
     };
 
 =head1 DESCRIPTION
-
-B<DEPRECATED>: this module has been renamed to L<Dancer::Plugin::Cache::CHI>.
 
 This plugin provides Dancer with an interface to a L<CHI> cache. Also, it
 includes a mechanism to easily cache the response of routes.
@@ -149,8 +142,6 @@ Shortcut to the cache's object methods.
 =head1 SEE ALSO
 
 Dancer Web Framework - L<Dancer>
-
-L<Dancer::Plugin::Cache::CHI> - the new incarnation of this module.
 
 L<Dancer::Plugin::Memcached> - plugin that heavily inspired this one.
 

@@ -1,5 +1,5 @@
 ---
-abstract: 'Dancer plugin to cache response content (and anything else) [DEPRECATED]'
+abstract: 'Dancer plugin to cache response content (and anything else)'
 author:
   - 'Yanick Champoux <yanick@cpan.org>'
 build_requires:
@@ -17,18 +17,18 @@ license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
-name: Dancer-Plugin-Cache
+name: Dancer-Plugin-Cache-CHI
 provides:
-  Dancer::Plugin::Cache:
-    file: lib/Dancer/Plugin/Cache.pm
-    version: v0.2.2
+  Dancer::Plugin::Cache::CHI:
+    file: lib/Dancer/Plugin/Cache/CHI.pm
+    version: v1.0.0
 requires:
   CHI: 0
   Dancer: 1.1904
   Dancer::Plugin: 0
 resources:
-  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dancer-Plugin-Cache
-  homepage: http://search.cpan.org/dist/Dancer-Plugin-Cache/
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dancer-Plugin-Cache-CHI
+  homepage: http://search.cpan.org/dist/Dancer-Plugin-Cache-CHI/
   repository: git://github.com/yanick/Dancer-Plugin-Cache.git
-version: 0.2.2
+version: 1.0.0
 x_authority: cpan:yanick

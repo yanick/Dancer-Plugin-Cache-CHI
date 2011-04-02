@@ -1,10 +1,10 @@
 # NAME
 
-Dancer::Plugin::Cache - Dancer plugin to cache response content (and anything else)
+Dancer::Plugin::Cache - Dancer plugin to cache response content (and anything else) [DEPRECATED]
 
 # VERSION
 
-version 0.2.1
+version 0.2.2
 
 # SYNOPSIS
 
@@ -53,6 +53,8 @@ In your application:
 
 # DESCRIPTION
 
+__DEPRECATED__: this module has been renamed to [Dancer::Plugin::Cache::CHI](http://search.cpan.org/perldoc?Dancer::Plugin::Cache::CHI).
+
 This plugin provides Dancer with an interface to a [CHI](http://search.cpan.org/perldoc?CHI) cache. Also, it
 includes a mechanism to easily cache the response of routes.
 
@@ -95,6 +97,8 @@ Shortcut to the cache's object methods.
 # SEE ALSO
 
 Dancer Web Framework - [Dancer](http://search.cpan.org/perldoc?Dancer)
+
+[Dancer::Plugin::Cache::CHI](http://search.cpan.org/perldoc?Dancer::Plugin::Cache::CHI) - the new incarnation of this module.
 
 [Dancer::Plugin::Memcached](http://search.cpan.org/perldoc?Dancer::Plugin::Memcached) - plugin that heavily inspired this one.
 

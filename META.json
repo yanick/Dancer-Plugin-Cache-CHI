@@ -1,5 +1,5 @@
 {
-   "abstract" : "Dancer plugin to cache response content (and anything else)",
+   "abstract" : "Dancer plugin to cache response content (and anything else) [DEPRECATED]",
    "author" : [
       "Yanick Champoux <yanick@cpan.org>"
    ],
@@ -44,7 +44,7 @@
    "provides" : {
       "Dancer::Plugin::Cache" : {
          "file" : "lib/Dancer/Plugin/Cache.pm",
-         "version" : "v0.2.1"
+         "version" : "v0.2.2"
       }
    },
    "release_status" : "stable",
@@ -60,7 +60,7 @@
          "web" : "http://github.com/yanick/Dancer-Plugin-Cache/tree"
       }
    },
-   "version" : "0.2.1",
+   "version" : "0.2.2",
    "x_authority" : "cpan:yanick"
 }
 

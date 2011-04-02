@@ -1,6 +1,8 @@
 Revision history for Dancer::Plugin::Cache
 
 {{$NEXT}}
+
+0.2.2     2011-04-02 19:04:42 America/Montreal
     - Dancer::Plugin::Cache deprecated in favor of
         Dancer::Plugin::Cache::CHI
 

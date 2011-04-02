@@ -1,5 +1,5 @@
 package Dancer::Plugin::Cache;
-# ABSTRACT: Dancer plugin to cache response content (and anything else)
+# ABSTRACT: Dancer plugin to cache response content (and anything else) [DEPRECATED]
 
 use strict;
 use warnings;
@@ -8,6 +8,9 @@ use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
 
 use CHI;
+
+warn "Dancer::Plugin::Cache is deprecated, ",
+     "use Dancer::Plugin::Cache::CHI instead\n";
 
 =head1 SYNOPSIS
 
@@ -54,6 +57,8 @@ In your application:
     };
 
 =head1 DESCRIPTION
+
+B<DEPRECATED>: this module has been renamed to L<Dancer::Plugin::Cache::CHI>.
 
 This plugin provides Dancer with an interface to a L<CHI> cache. Also, it
 includes a mechanism to easily cache the response of routes.
@@ -132,6 +137,8 @@ __END__
 =head1 SEE ALSO
 
 Dancer Web Framework - L<Dancer>
+
+L<Dancer::Plugin::Cache::CHI> - the new incarnation of this module.
 
 L<Dancer::Plugin::Memcached> - plugin that heavily inspired this one.
 

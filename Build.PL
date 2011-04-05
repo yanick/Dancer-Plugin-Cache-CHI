@@ -7,12 +7,9 @@ use Module::Build 0.3601;
 
 my %module_build_args = (
   'build_requires' => {
-    'Carp' => '0',
     'Dancer::Test' => '0',
     'Module::Build' => '0.3601',
-    'Scalar::Util' => '0',
-    'Test::More' => '0.94',
-    'perl' => '5.004'
+    'Test::More' => '0'
   },
   'configure_requires' => {
     'Module::Build' => '0.3601'
@@ -22,7 +19,7 @@ my %module_build_args = (
     'Yanick Champoux <yanick@cpan.org>'
   ],
   'dist_name' => 'Dancer-Plugin-Cache-CHI',
-  'dist_version' => '1.0.0',
+  'dist_version' => '1.0.1',
   'license' => 'perl',
   'module_name' => 'Dancer::Plugin::Cache::CHI',
   'recommends' => {},

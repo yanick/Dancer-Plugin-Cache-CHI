@@ -33,18 +33,15 @@
       },
       "test" : {
          "requires" : {
-            "Carp" : 0,
             "Dancer::Test" : 0,
-            "Scalar::Util" : 0,
-            "Test::More" : "0.94",
-            "perl" : "5.004"
+            "Test::More" : 0
          }
       }
    },
    "provides" : {
       "Dancer::Plugin::Cache::CHI" : {
          "file" : "lib/Dancer/Plugin/Cache/CHI.pm",
-         "version" : "v1.0.0"
+         "version" : "v1.0.1"
       }
    },
    "release_status" : "stable",
@@ -60,7 +57,7 @@
          "web" : "http://github.com/yanick/Dancer-Plugin-Cache/tree"
       }
    },
-   "version" : "1.0.0",
+   "version" : "1.0.1",
    "x_authority" : "cpan:yanick"
 }
 

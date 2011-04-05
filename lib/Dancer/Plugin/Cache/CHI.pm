@@ -3,7 +3,7 @@ BEGIN {
   $Dancer::Plugin::Cache::CHI::AUTHORITY = 'cpan:yanick';
 }
 BEGIN {
-  $Dancer::Plugin::Cache::CHI::VERSION = '1.0.0';
+  $Dancer::Plugin::Cache::CHI::VERSION = '1.0.1';
 }
 # ABSTRACT: Dancer plugin to cache response content (and anything else)
 
@@ -52,7 +52,7 @@ Dancer::Plugin::Cache::CHI - Dancer plugin to cache response content (and anythi
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 

@@ -8,6 +8,5 @@ README
 README.mkdn
 SIGNATURE
 lib/Dancer/Plugin/Cache/CHI.pm
-t/000-report-versions.t
 t/TestApp.pm
 t/basic.t

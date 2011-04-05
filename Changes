@@ -2,6 +2,9 @@ Revision history for Dancer::Plugin::Cache::CHI
 
 {{$NEXT}}
 
+1.0.1     2011-04-04 20:01:06 America/Montreal
+    - report-version seems to be causing problems.
+
 1.0.0     2011-04-02 19:12:41 America/Montreal
     - Re-brand the dist as Dancer::Plugin::Cache::CHI.
 

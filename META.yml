@@ -18,7 +18,7 @@ name: Dancer-Plugin-Cache-CHI
 provides:
   Dancer::Plugin::Cache::CHI:
     file: lib/Dancer/Plugin/Cache/CHI.pm
-    version: v1.0.1
+    version: v1.0.2
 requires:
   CHI: 0
   Dancer: 1.1904
@@ -27,5 +27,5 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dancer-Plugin-Cache-CHI
   homepage: http://search.cpan.org/dist/Dancer-Plugin-Cache-CHI/
   repository: git://github.com/yanick/Dancer-Plugin-Cache.git
-version: 1.0.1
+version: 1.0.2
 x_authority: cpan:yanick

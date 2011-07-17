@@ -19,7 +19,7 @@ my %module_build_args = (
     'Yanick Champoux <yanick@cpan.org>'
   ],
   'dist_name' => 'Dancer-Plugin-Cache-CHI',
-  'dist_version' => '1.0.1',
+  'dist_version' => '1.0.2',
   'license' => 'perl',
   'module_name' => 'Dancer::Plugin::Cache::CHI',
   'recommends' => {},

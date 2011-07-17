@@ -91,7 +91,9 @@ cached content. Caveat emptor.
 
 register check_page_cache => sub {
     before sub {
-        halt cache()->get(request->{path_info});
+        if ( my $cached =  cache()->get(request->{path_info}) ) {
+            halt $cached;
+        }
     };  
 };
 

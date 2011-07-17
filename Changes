@@ -1,6 +1,8 @@
 Revision history for Dancer::Plugin::Cache::CHI
 
 {{$NEXT}}
+
+1.0.2     2011-07-17
     [BUG FIXES]
     - fix 'check_page_cache'. Looks like the behavior of 'halt'
         changed since the last release of D::P::C::CHI.

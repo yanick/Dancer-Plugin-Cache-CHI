@@ -4,7 +4,7 @@ Dancer::Plugin::Cache::CHI - Dancer plugin to cache response content (and anythi
 
 # VERSION
 
-version 1.0.2
+version 1.1.0
 
 # SYNOPSIS
 
@@ -41,6 +41,10 @@ In your application:
 
     get '/stash' => sub {
         return cache_get 'secret_stash';
+    };
+
+    del '/stash' => {
+        return cache_remove 'secret_stash';
     };
 
     # using the cache directly
@@ -83,7 +87,7 @@ cached content. Caveat emptor.
 Caches the _$content_ to be served to subsequent requests. The _$expiration_
 parameter is optional.
 
-## cache_set, cache_get, cache_clear, cache_compute
+## cache_set, cache_get, cache_remove, cache_clear, cache_compute
 
 Shortcut to the cache's object methods.
 
@@ -92,9 +96,13 @@ Shortcut to the cache's object methods.
         cache_set $params->{attr} => $params->{value};
     };
 
+See the [CHI](http://search.cpan.org/perldoc?CHI) documentation for further info on these methods.
+
 # SEE ALSO
 
 Dancer Web Framework - [Dancer](http://search.cpan.org/perldoc?Dancer)
+
+[CHI](http://search.cpan.org/perldoc?CHI)
 
 [Dancer::Plugin::Memcached](http://search.cpan.org/perldoc?Dancer::Plugin::Memcached) - plugin that heavily inspired this one.
 

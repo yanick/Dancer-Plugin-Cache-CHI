@@ -41,7 +41,7 @@
    "provides" : {
       "Dancer::Plugin::Cache::CHI" : {
          "file" : "lib/Dancer/Plugin/Cache/CHI.pm",
-         "version" : "v1.0.2"
+         "version" : "v1.1.0"
       }
    },
    "release_status" : "stable",
@@ -53,11 +53,11 @@
       "homepage" : "http://search.cpan.org/dist/Dancer-Plugin-Cache-CHI/",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/yanick/Dancer-Plugin-Cache.git",
-         "web" : "http://github.com/yanick/Dancer-Plugin-Cache/tree"
+         "url" : "git://github.com/yanick/Dancer-Plugin-Cache-CHI.git",
+         "web" : "http://github.com/yanick/Dancer-Plugin-Cache-CHI/tree"
       }
    },
-   "version" : "1.0.2",
+   "version" : "1.1.0",
    "x_authority" : "cpan:yanick"
 }
 

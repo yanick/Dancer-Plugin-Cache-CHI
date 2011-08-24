@@ -3,7 +3,7 @@ NAME
     (and anything else)
 
 VERSION
-    version 1.0.2
+    version 1.1.0
 
 SYNOPSIS
     In your configuration:
@@ -40,6 +40,10 @@ SYNOPSIS
             return cache_get 'secret_stash';
         };
 
+        del '/stash' => {
+            return cache_remove 'secret_stash';
+        };
+
         # using the cache directly
 
         get '/something' => sub {
@@ -74,7 +78,7 @@ KEYWORDS
     Caches the *$content* to be served to subsequent requests. The
     *$expiration* parameter is optional.
 
-  cache_set, cache_get, cache_clear, cache_compute
+  cache_set, cache_get, cache_remove, cache_clear, cache_compute
     Shortcut to the cache's object methods.
 
         get '/cache/:attr/:value' => sub {
@@ -82,8 +86,12 @@ KEYWORDS
             cache_set $params->{attr} => $params->{value};
         };
 
+    See the CHI documentation for further info on these methods.
+
 SEE ALSO
     Dancer Web Framework - Dancer
+
+    CHI
 
     Dancer::Plugin::Memcached - plugin that heavily inspired this one.
 

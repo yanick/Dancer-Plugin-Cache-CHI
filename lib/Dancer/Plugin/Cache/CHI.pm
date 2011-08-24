@@ -3,7 +3,7 @@ BEGIN {
   $Dancer::Plugin::Cache::CHI::AUTHORITY = 'cpan:yanick';
 }
 BEGIN {
-  $Dancer::Plugin::Cache::CHI::VERSION = '1.0.2';
+  $Dancer::Plugin::Cache::CHI::VERSION = '1.1.0';
 }
 # ABSTRACT: Dancer plugin to cache response content (and anything else)
 
@@ -36,7 +36,7 @@ register cache_page => sub {
 };
 
 
-for my $method ( qw/ set get clear compute / ) {
+for my $method ( qw/ set get remove clear compute / ) {
     register 'cache_'.$method => sub {
         return cache()->$method( @_ );
     }
@@ -54,7 +54,7 @@ Dancer::Plugin::Cache::CHI - Dancer plugin to cache response content (and anythi
 
 =head1 VERSION
 
-version 1.0.2
+version 1.1.0
 
 =head1 SYNOPSIS
 
@@ -90,6 +90,10 @@ In your application:
 
     get '/stash' => sub {
         return cache_get 'secret_stash';
+    };
+
+    del '/stash' => {
+        return cache_remove 'secret_stash';
     };
 
     # using the cache directly
@@ -132,7 +136,7 @@ cached content. Caveat emptor.
 Caches the I<$content> to be served to subsequent requests. The I<$expiration>
 parameter is optional.
 
-=head2 cache_set, cache_get, cache_clear, cache_compute
+=head2 cache_set, cache_get, cache_remove, cache_clear, cache_compute
 
 Shortcut to the cache's object methods.
 
@@ -141,9 +145,13 @@ Shortcut to the cache's object methods.
         cache_set $params->{attr} => $params->{value};
     };
 
+See the L<CHI> documentation for further info on these methods.
+
 =head1 SEE ALSO
 
 Dancer Web Framework - L<Dancer>
+
+L<CHI>
 
 L<Dancer::Plugin::Memcached> - plugin that heavily inspired this one.
 

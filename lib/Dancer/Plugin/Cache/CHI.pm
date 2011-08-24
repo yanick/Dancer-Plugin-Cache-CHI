@@ -45,6 +45,10 @@ In your application:
         return cache_get 'secret_stash';
     };
 
+    del '/stash' => {
+        return cache_remove 'secret_stash';
+    };
+
     # using the cache directly
 
     get '/something' => sub {
@@ -108,7 +112,7 @@ register cache_page => sub {
     return cache()->set( request->{path_info}, @_ );
 };
 
-=head2 cache_set, cache_get, cache_clear, cache_compute
+=head2 cache_set, cache_get, cache_remove, cache_clear, cache_compute
 
 Shortcut to the cache's object methods.
 
@@ -117,9 +121,11 @@ Shortcut to the cache's object methods.
         cache_set $params->{attr} => $params->{value};
     };
 
+See the L<CHI> documentation for further info on these methods.
+
 =cut 
 
-for my $method ( qw/ set get clear compute / ) {
+for my $method ( qw/ set get remove clear compute / ) {
     register 'cache_'.$method => sub {
         return cache()->$method( @_ );
     }
@@ -132,6 +138,8 @@ __END__
 =head1 SEE ALSO
 
 Dancer Web Framework - L<Dancer>
+
+L<CHI>
 
 L<Dancer::Plugin::Memcached> - plugin that heavily inspired this one.
 

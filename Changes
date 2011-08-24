@@ -1,33 +1,30 @@
 Revision history for Dancer::Plugin::Cache::CHI
 
 {{$NEXT}}
-    [ENHANCEMENTS]
-    - add 'cache_remove' helper function. Patch by 
-        David Precious. [GH#1]
+ [API CHANGES]
 
-1.0.2     2011-07-17
-    [BUG FIXES]
-    - fix 'check_page_cache'. Looks like the behavior of 'halt'
-        changed since the last release of D::P::C::CHI.
+ [BUG FIXES]
 
-1.0.1     2011-04-04
-    - report-version seems to be causing problems.
+ [ENHANCEMENTS]
 
-1.0.0     2011-04-02
-    - Re-brand the dist as Dancer::Plugin::Cache::CHI.
+1.1.0 2011-08-24
+ [ENHANCEMENTS]
+ - add 'cache_remove' helper function. Patch by  David Precious. [GH#1]
 
-0.2.2     2011-04-02
-    - Dancer::Plugin::Cache deprecated in favor of
-        Dancer::Plugin::Cache::CHI
+1.0.2 2011-07-17
+ [BUG FIXES]
+ - fix 'check_page_cache'. Looks like the behavior of 'halt' changed since
+   the last release of D::P::C::CHI.
 
-0.2.1     2011-03-20
-    - Requires Dancer > 1.150
+1.0.1 2011-04-04
 
-0.2.0     2011-03-19
-    - Add cache helper functions. Thanks to David Precious for the
-      suggestion. [RT#66714]
+1.0.0 2011-04-02
 
-0.1.0     2011-03-16
+0.2.2 2011-04-02
 
-    - Initial release, unleashed unto an unsuspecting world.
+0.2.1 2011-03-20
+
+0.2.0 2011-03-19
+
+0.1.0 2011-03-16
 

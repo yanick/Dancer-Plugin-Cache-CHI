@@ -4,7 +4,8 @@ Revision history for Dancer::Plugin::Cache::CHI
  [API CHANGES]
 
  [BUG FIXES]
- - add test for 'cache_remove'.
+ - add test for 'cache_remove'
+ - Change log was messed up by dzil plugin
 
  [ENHANCEMENTS]
 
@@ -17,15 +18,24 @@ Revision history for Dancer::Plugin::Cache::CHI
  - fix 'check_page_cache'. Looks like the behavior of 'halt' changed since
    the last release of D::P::C::CHI.
 
-1.0.1 2011-04-04
+1.0.1     2011-04-04
+    - report-version seems to be causing problems.
 
-1.0.0 2011-04-02
+1.0.0     2011-04-02
+    - Re-brand the dist as Dancer::Plugin::Cache::CHI.
 
-0.2.2 2011-04-02
+0.2.2     2011-04-02
+    - Dancer::Plugin::Cache deprecated in favor of
+        Dancer::Plugin::Cache::CHI
 
-0.2.1 2011-03-20
+0.2.1     2011-03-20
+    - Requires Dancer > 1.150
 
-0.2.0 2011-03-19
+0.2.0     2011-03-19
+    - Add cache helper functions. Thanks to David Precious for the
+      suggestion. [RT#66714]
 
-0.1.0 2011-03-16
+0.1.0     2011-03-16
+
+    - Initial release, unleashed unto an unsuspecting world.
 

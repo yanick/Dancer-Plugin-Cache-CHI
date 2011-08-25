@@ -9,7 +9,7 @@ use TestApp;
 
 use Dancer::Test;
 
-plan tests => 14;
+plan tests => 16;
 
 response_status_is [ 'GET', '/set/foo/bar' ], 200, '/set/foo/bar';
 
@@ -33,6 +33,8 @@ my $resp = dancer_response PUT => '/stash', { body => $secret };
 is $resp->status => 200, 'secret stashed';
 
 response_content_is [ GET => '/stash' ], $secret, 'secret retrieved';
+response_status_is [ DELETE => '/stash' ], 200, 'secret removed';
+response_content_is [ GET => '/stash' ], '', 'secret gone';
 
 response_content_is [ GET => '/compute' ], 'aab', '/compute, first';
 response_content_is [ GET => '/compute' ], 'aab', '/compute, cached';

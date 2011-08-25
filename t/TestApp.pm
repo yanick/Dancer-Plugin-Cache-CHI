@@ -40,6 +40,10 @@ get '/stash' => sub {
     return cache_get 'secret_stash';
 };
 
+del '/stash' => sub {
+    return cache_remove 'secret_stash';
+};
+
 my $computed = 'aaa';
 get '/compute' => sub {
     return cache_compute compute => sub { ++$computed };

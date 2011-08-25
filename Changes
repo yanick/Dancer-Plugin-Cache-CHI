@@ -4,6 +4,7 @@ Revision history for Dancer::Plugin::Cache::CHI
  [API CHANGES]
 
  [BUG FIXES]
+ - add test for 'cache_remove'.
 
  [ENHANCEMENTS]
 

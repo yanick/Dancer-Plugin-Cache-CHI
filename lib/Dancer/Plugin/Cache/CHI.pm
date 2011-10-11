@@ -10,6 +10,8 @@ BEGIN {
 use strict;
 use warnings;
 
+no warnings qw/ uninitialized /;
+
 use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
 use Dancer::Response;
@@ -19,17 +21,22 @@ use CHI;
 
 
 my $cache;
-my $cache_it_flag;
+my $cache_page; # actually hold the ref to the args
 
 my $after_cb = sub {
+    return unless $cache_page;
+
     my $resp = shift;
     cache()->set( request->{path_info},
         {
             status      => $resp->status,
             headers     => $resp->headers_to_array,
             content     => $resp->content
-        }) if $cache_it_flag;
-    $cache_it_flag = 0;
+        },
+        @$cache_page,
+    );
+
+    $cache_page = undef;
 };
 
 
@@ -63,12 +70,15 @@ register check_page_cache => sub {
 
 
 register cache_page => sub {
-    $cache_it_flag = 1;
+    my ( $content, @args ) = @_;
+    $cache_page = \@args;
+
     if ($after_cb) {
         after $after_cb;
         $after_cb = undef;
     }
-    return $_[0];
+
+    return $content;
 };
 
 

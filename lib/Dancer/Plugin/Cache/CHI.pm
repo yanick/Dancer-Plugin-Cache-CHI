@@ -12,11 +12,27 @@ use warnings;
 
 use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
+use Dancer::Response;
+use Dancer::SharedData;
 
 use CHI;
 
 
 my $cache;
+my $cache_it_flag;
+
+my $after_cb = sub {
+    my $resp = shift;
+    cache()->set( request->{path_info},
+        {
+            status      => $resp->status,
+            headers     => $resp->headers_to_array,
+            content     => $resp->content
+        }) if $cache_it_flag;
+    $cache_it_flag = 0;
+};
+
+
 register cache => sub {
     return $cache ||= CHI->new(%{ plugin_setting() });
 };
@@ -24,15 +40,35 @@ register cache => sub {
 
 register check_page_cache => sub {
     before sub {
-        if ( my $cached =  cache()->get(request->{path_info}) ) {
-            halt $cached;
+        # Instead halt() now we use a more correct method - setting of a
+        # response to Dancer::Response object for a more correct returning of
+        # some HTTP headers (X-Powered-By, Server)
+        if ( my $cached =  cache()->get(request->{path_info})) {
+            Dancer::SharedData->response(
+                Dancer::Response->new(
+                    ref $cached eq 'HASH'
+                    ?
+                    (
+                        status       => $cached->{status},
+                        headers      => $cached->{headers},
+                        content      => $cached->{content}
+                    )
+                    :
+                    ( content => $cached )
+                )
+            );
         }
-    };  
+    };
 };
 
 
 register cache_page => sub {
-    return cache()->set( request->{path_info}, @_ );
+    $cache_it_flag = 1;
+    if ($after_cb) {
+        after $after_cb;
+        $after_cb = undef;
+    }
+    return $_[0];
 };
 
 
@@ -71,7 +107,7 @@ In your application:
     use Dancer::Plugin::Cache::CHI;
 
     # caching pages' response
-    
+
     check_page_cache;
 
     get '/cache_me' => sub {
@@ -127,7 +163,7 @@ Returns the L<CHI> cache object.
 
 If invoked, returns the cached response of a route, if available.
 
-The C<path_info> attribute of the request is used as the key for the route, 
+The C<path_info> attribute of the request is used as the key for the route,
 so the same route requested with different parameters will yield the same
 cached content. Caveat emptor.
 
@@ -170,4 +206,3 @@ the same terms as the Perl 5 programming language system itself.
 
 
 __END__
-

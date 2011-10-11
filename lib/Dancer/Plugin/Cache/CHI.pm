@@ -8,6 +8,8 @@ use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
 use Dancer::Hook;
 use Dancer::Factory::Hook;
+use Dancer::Response;
+use Dancer::SharedData;
 
 use CHI;
 
@@ -81,6 +83,19 @@ Returns the L<CHI> cache object.
 =cut
 
 my $cache;
+my $cache_it_flag;
+
+my $after_cb = sub {
+    my $resp = shift;
+    cache()->set( request->{path_info},
+        {
+            status      => $resp->status,
+            headers     => $resp->headers_to_array,
+            content     => $resp->content
+        }) if $cache_it_flag;
+    $cache_it_flag = 0;
+};
+
 register cache => sub {
     return $cache ||= _create_cache();
 };
@@ -103,10 +118,25 @@ cached content. Caveat emptor.
 
 register check_page_cache => sub {
     before sub {
-        if ( my $cached =  cache()->get(request->{path_info}) ) {
-            halt $cached;
+        # Instead halt() now we use a more correct method - setting of a
+        # response to Dancer::Response object for a more correct returning of
+        # some HTTP headers (X-Powered-By, Server)
+        if ( my $cached =  cache()->get(request->{path_info})) {
+            Dancer::SharedData->response(
+                Dancer::Response->new(
+                    ref $cached eq 'HASH'
+                    ?
+                    (
+                        status       => $cached->{status},
+                        headers      => $cached->{headers},
+                        content      => $cached->{content}
+                    )
+                    :
+                    ( content => $cached )
+                )
+            );
         }
-    };  
+    };
 };
 
 =head2 cache_page($content, $expiration)
@@ -117,7 +147,12 @@ parameter is optional.
 =cut
 
 register cache_page => sub {
-    return cache()->set( request->{path_info}, @_ );
+    $cache_it_flag = 1;
+    if ($after_cb) {
+        after $after_cb;
+        $after_cb = undef;
+    }
+    return $_[0];
 };
 
 =head2 cache_set, cache_get, cache_remove, cache_clear, cache_compute

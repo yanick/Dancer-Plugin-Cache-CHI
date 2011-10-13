@@ -85,7 +85,7 @@ Returns the L<CHI> cache object.
 my $cache;
 my $cache_page; # actually hold the ref to the args
 
-my $after_cb = sub {
+hook after => sub {
     return unless $cache_page;
 
     my $resp = shift;
@@ -154,12 +154,8 @@ parameter is optional.
 
 register cache_page => sub {
     my ( $content, @args ) = @_;
-    $cache_page = \@args;
 
-    if ($after_cb) {
-        after $after_cb;
-        $after_cb = undef;
-    }
+    $cache_page = \@args;
 
     return $content;
 };

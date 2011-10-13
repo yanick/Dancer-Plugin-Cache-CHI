@@ -127,21 +127,23 @@ register check_page_cache => sub {
         # Instead halt() now we use a more correct method - setting of a
         # response to Dancer::Response object for a more correct returning of
         # some HTTP headers (X-Powered-By, Server)
-        if ( my $cached =  cache()->get(request->{path_info})) {
-            Dancer::SharedData->response(
-                Dancer::Response->new(
-                    ref $cached eq 'HASH'
-                    ?
-                    (
-                        status       => $cached->{status},
-                        headers      => $cached->{headers},
-                        content      => $cached->{content}
-                    )
-                    :
-                    ( content => $cached )
+
+        my $cached = cache()->get(request->{path_info}) 
+            or return;
+
+        Dancer::SharedData->response(
+            Dancer::Response->new(
+                ref $cached eq 'HASH'
+                ?
+                (
+                    status       => $cached->{status},
+                    headers      => $cached->{headers},
+                    content      => $cached->{content}
                 )
-            );
-        }
+                :
+                ( content => $cached )
+            )
+        );
     };
 };
 

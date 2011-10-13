@@ -9,7 +9,7 @@ use TestApp;
 
 use Dancer::Test;
 
-plan tests => 21;
+plan tests => 24;
 
 response_status_is [ 'GET', '/set/foo/bar' ], 200, '/set/foo/bar';
 
@@ -58,3 +58,6 @@ subtest 'expires in 2 seconds' => sub {
     fail "didn't expire in 10 seconds";
 };
 
+response_status_is '/clear_headers' => 200;
+response_headers_include [ GET => '/headers' ], [ 'X-Foo' => 1 ];
+response_headers_include [ GET => '/headers' ], [ 'X-Foo' => 1 ];

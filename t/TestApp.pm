@@ -56,4 +56,16 @@ get '/expire_quick' => sub {
     return cache_page ++$cached_quick, 2;
 };
 
+my $headers;
+before sub {
+    header 'X-Foo' => ++$headers;
+};
+
+get '/clear_headers' => sub { $headers = 0 };
+get '/headers' => sub {
+    cache_page 'gonzo';
+};
+
+
+
 1;

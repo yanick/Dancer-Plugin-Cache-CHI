@@ -24,6 +24,8 @@ get '/cached' => sub {
     return cache_page ++$counter;
 };
 
+get '/counter' => sub { $counter };
+
 get '/check_page_cache' => sub {
     check_page_cache;
 };
@@ -47,6 +49,11 @@ del '/stash' => sub {
 my $computed = 'aaa';
 get '/compute' => sub {
     return cache_compute compute => sub { ++$computed };
+};
+
+my $cached_quick;
+get '/expire_quick' => sub {
+    return cache_page ++$cached_quick, 2;
 };
 
 1;

@@ -83,22 +83,28 @@ Returns the L<CHI> cache object.
 =cut
 
 my $cache;
-my $cache_it_flag;
+my $cache_page; # actually hold the ref to the args
 
 my $after_cb = sub {
+    return unless $cache_page;
+
     my $resp = shift;
     cache()->set( request->{path_info},
         {
             status      => $resp->status,
             headers     => $resp->headers_to_array,
             content     => $resp->content
-        }) if $cache_it_flag;
-    $cache_it_flag = 0;
+        },
+        @$cache_page,
+    );
+
+    $cache_page = undef;
 };
 
 register cache => sub {
     return $cache ||= _create_cache();
 };
+
 
 sub _create_cache {
     Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
@@ -147,13 +153,17 @@ parameter is optional.
 =cut
 
 register cache_page => sub {
-    $cache_it_flag = 1;
+    my ( $content, @args ) = @_;
+    $cache_page = \@args;
+
     if ($after_cb) {
         after $after_cb;
         $after_cb = undef;
     }
-    return $_[0];
+
+    return $content;
 };
+
 
 =head2 cache_set, cache_get, cache_remove, cache_clear, cache_compute
 

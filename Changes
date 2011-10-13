@@ -8,6 +8,7 @@ Revision history for Dancer::Plugin::Cache::CHI
  - Change log was messed up by dzil plugin
 
  [ENHANCEMENTS]
+ - add 'before_create_cache' hook
 
 1.1.0 2011-08-24
  [ENHANCEMENTS]

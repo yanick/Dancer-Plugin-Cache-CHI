@@ -6,6 +6,8 @@ use warnings;
 
 use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
+use Dancer::Hook;
+use Dancer::Factory::Hook;
 
 use CHI;
 
@@ -80,8 +82,14 @@ Returns the L<CHI> cache object.
 
 my $cache;
 register cache => sub {
-    return $cache ||= CHI->new(%{ plugin_setting() });
+    return $cache ||= _create_cache();
 };
+
+sub _create_cache {
+    Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
+    return CHI->new(%{ plugin_setting() });
+}
+
 
 =head2 check_page_cache
 
@@ -130,6 +138,27 @@ for my $method ( qw/ set get remove clear compute / ) {
         return cache()->$method( @_ );
     }
 }
+
+Dancer::Factory::Hook->instance->install_hooks(qw/ before_create_cache /);
+
+=head1 HOOKS
+
+=head2 before_create_cache
+
+Called before the creation of the cache, which is lazily done upon
+its first use. 
+
+Useful, for example, to change the cache's configuration at run time:
+
+
+    use Sys::Hostname;
+
+    # set the namespace to the current hostname
+    hook before_create_cache => sub {
+        config->{plugins}{'Cache::CHI'}{namespace} = hostname;
+    };
+    
+=cut
 
 register_plugin;
 

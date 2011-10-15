@@ -11,6 +11,10 @@ Revision history for Dancer::Plugin::Cache::CHI
  - add 'before_create_cache' hook
  - now http headers of cached response are saved as well,
      and we're not using 'halt' anymore. (patch by Perlover)
+ - new configuration option 'honor_no_cache' for client-side
+    'Cache-Control: no-cache' or 'Pragma: no-cache'.
+    (original patch and idea by Perlover)
+
 
 1.1.0 2011-08-24
  [ENHANCEMENTS]

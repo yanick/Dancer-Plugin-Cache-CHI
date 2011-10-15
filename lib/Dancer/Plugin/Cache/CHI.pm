@@ -149,8 +149,10 @@ register check_page_cache => sub {
 
 =head2 cache_page($content, $expiration)
 
-Caches the I<$content> to be served to subsequent requests. The I<$expiration>
-parameter is optional.
+Caches the I<$content> to be served to subsequent requests.
+The headers and http status of the response are also cached.
+
+The I<$expiration> parameter is optional.
 
 =cut
 

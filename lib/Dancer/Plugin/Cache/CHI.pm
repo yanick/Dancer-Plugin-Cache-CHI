@@ -3,6 +3,7 @@ package Dancer::Plugin::Cache::CHI;
 
 use strict;
 use warnings;
+no warnings qw/ uninitialized /;
 
 use Dancer 1.1904 ':syntax';
 use Dancer::Plugin;
@@ -68,11 +69,17 @@ includes a mechanism to easily cache the response of routes.
 
 =head1 CONFIGURATION
 
-The plugin's configuration is passed directly to the L<CHI> object's
+Unrecognized configuration elements are passed directly to the L<CHI> object's
 constructor. For example, the configuration given in the L</SYNOPSIS>
 will create a cache object equivalent to
 
     $cache = CHI->new( driver => 'Memory', global => 1, );
+
+=head2 honor_no_cache
+
+If the parameter 'C<honor_no_cache>' is set to true, a request with the http
+header 'C<Cache-Control>' or 'C<Pragma>' set to 'I<no-cache>' will ignore any
+content cached via 'C<cache_page>' and will have the page regenerated anew.
 
 =head1 KEYWORDS
 
@@ -106,9 +113,17 @@ register cache => sub {
 };
 
 
+my $honor_no_cache = 0;
 sub _create_cache {
     Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
-    return CHI->new(%{ plugin_setting() });
+
+    my %setting = %{ plugin_setting() };
+
+    if ( exists $setting{honor_no_cache} ) {
+        $honor_no_cache = delete $setting{honor_no_cache};
+    }
+
+    return CHI->new(%setting);
 }
 
 
@@ -130,6 +145,13 @@ register check_page_cache => sub {
 
         my $cached = cache()->get(request->{path_info}) 
             or return;
+
+        if ( $honor_no_cache ) {
+            my $req =  Dancer::SharedData->request;
+
+            return if $req->header('Cache-Control') eq 'no-cache'
+                   or $req->header('Pragma')        eq 'no-cache';
+        }
 
         Dancer::SharedData->response(
             Dancer::Response->new(

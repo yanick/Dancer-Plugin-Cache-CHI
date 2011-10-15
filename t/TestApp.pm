@@ -24,6 +24,8 @@ get '/cached' => sub {
     return cache_page ++$counter;
 };
 
+get '/counter' => sub { $counter };
+
 get '/check_page_cache' => sub {
     check_page_cache;
 };
@@ -48,5 +50,22 @@ my $computed = 'aaa';
 get '/compute' => sub {
     return cache_compute compute => sub { ++$computed };
 };
+
+my $cached_quick;
+get '/expire_quick' => sub {
+    return cache_page ++$cached_quick, 2;
+};
+
+my $headers;
+before sub {
+    header 'X-Foo' => ++$headers;
+};
+
+get '/clear_headers' => sub { $headers = 0 };
+get '/headers' => sub {
+    cache_page 'gonzo';
+};
+
+
 
 1;

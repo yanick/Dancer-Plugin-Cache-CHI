@@ -91,12 +91,15 @@ Returns the L<CHI> cache object.
 
 my $cache;
 my $cache_page; # actually hold the ref to the args
+my $cache_page_key_generator = sub {
+    return request()->{path_info};
+};
 
 hook after => sub {
     return unless $cache_page;
 
     my $resp = shift;
-    cache()->set( request->{path_info},
+    cache()->set( $cache_page_key_generator->(),
         {
             status      => $resp->status,
             headers     => $resp->headers_to_array,
@@ -143,7 +146,8 @@ register check_page_cache => sub {
         # response to Dancer::Response object for a more correct returning of
         # some HTTP headers (X-Powered-By, Server)
 
-        my $cached = cache()->get(request->{path_info}) 
+        $DB::single = 1;
+        my $cached = cache()->get( $cache_page_key_generator->() ) 
             or return;
 
         if ( $honor_no_cache ) {
@@ -186,6 +190,35 @@ register cache_page => sub {
     return $content;
 };
 
+=head2 cache_page_key
+
+Returns the cache key used by 'C<cache_page>'. Defaults to
+to the request's I<path_info>, but can be modified via
+I<cache_page_key_generator>.
+
+=cut
+
+
+register cache_page_key => sub {
+    return $cache_page_key_generator->();
+};
+
+=head2 cache_page_key_generator( \&sub ) 
+
+Sets the function that generates the cache key for I<cache_page>. 
+
+For example, to have the key contains both information about the request's
+hostname and path_info (useful to deal with multi-machine applications):
+
+    cache_page_key_generator sub {
+        return join ':", request()->host, request()->path_info;
+    };
+
+=cut
+
+register cache_page_key_generator => sub {
+    $cache_page_key_generator = shift;
+};
 
 =head2 cache_set, cache_get, cache_remove, cache_clear, cache_compute
 

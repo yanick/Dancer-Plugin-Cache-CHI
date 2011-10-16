@@ -1,5 +1,20 @@
 Revision history for Dancer::Plugin::Cache::CHI
 
+1.2.0 2011-10-15
+ [BUG FIXES]
+ - add test for 'cache_remove'
+ - Change log was messed up by dzil plugin
+
+ [ENHANCEMENTS]
+ - add 'before_create_cache' hook
+ - now http headers of cached response are saved as well, and we're not
+   using 'halt' anymore. (patch by Perlover)
+ - new configuration option 'honor_no_cache' for client-side
+   'Cache-Control: no-cache' or 'Pragma: no-cache'. (original patch and
+   idea by Perlover)
+ - cache keys used by 'cache_page' can be customized via
+   'cache_page_key_generator'.
+
 1.1.0 2011-08-24
  [ENHANCEMENTS]
  - add 'cache_remove' helper function. Patch by  David Precious. [GH#1]

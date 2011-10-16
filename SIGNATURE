@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.64.
+signed via the Module::Signature module, version 0.68.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,22 +14,25 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 15a4719abc99eba73670e5026f8499248a98a950 Build.PL
-SHA1 5d52b7bc782a4679cfd973b29f26025467014f6c Changes
+SHA1 5e8bdd68364e8ba0a05018b27ddf1a722ee93252 Build.PL
+SHA1 929bf45c969df7d6a3982878731884419941e664 Changes
 SHA1 1475d7a88d22765608e02f43e04eca9db4c20019 INSTALL
-SHA1 59da7efc4d54fec3810ae9f44a59eb3ee7139957 LICENSE
-SHA1 40f65c862c0ca2ddd54d7548490669845c0ccc5d MANIFEST
-SHA1 4487e877a8f3915b7e46fa1daeb1819aa098a341 META.json
-SHA1 12d4aa10f0fcc3520ee28d196ce23c74cfe9db1e META.yml
-SHA1 1729fe787e583fe33bb3d081e9d4f664f66927db README
-SHA1 67a7537b94e18e2335948e87e9e9bf5243e4e24f README.mkdn
-SHA1 be2b907d0a5be2b238e9bc4379bbc66d4de28c63 lib/Dancer/Plugin/Cache/CHI.pm
-SHA1 f8eea816d244f00f05bc76751c35e1c9f6035e8e t/TestApp.pm
-SHA1 e14af588c55362a256be7e3044dfa6e03b53548d t/basic.t
+SHA1 8b9aba8e907c815af9fe6d760f19a072a6d7f1fd LICENSE
+SHA1 2629b4e851586ed4f6168cca2e52759d5abdd980 MANIFEST
+SHA1 d129e840ff8a8345547b11f77eb9993dda4f458e META.json
+SHA1 3f9b320f9bb6af59846f5cc20a8503c60245e39d META.yml
+SHA1 b6315143726a6c42bb51ef6be77c40d64b90449e README
+SHA1 8d41104c344eec5d4f35b4c8b49ecd8858cf8596 README.mkdn
+SHA1 ba9791862d307c2819a71026e4d60d4476808b7f lib/Dancer/Plugin/Cache/CHI.pm
+SHA1 c33ee5163a066d74526d6d654b27a69fab0c962a t/TestApp.pm
+SHA1 5295036e35f4ce7eb4614efcd620818ccd42b7f1 t/basic.t
+SHA1 bd9b4853d37add7a9fce080b1521fb799329e3b7 t/honor-no-cache.t
+SHA1 4a9d70a981b637946a34bc40645f87dcca177bb6 t/hooks.t
+SHA1 9417dda5f184fe3dbdd0cd1b503dc94489ec1a9f t/key-gen.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAk5Vj9oACgkQ34Hwf+GwC4ziawCffAwRETuCGHk9zKZXN4+s9cXf
-hmIAn3l4hEjxG01L4EMbSOrti//LnLIh
-=fFSl
+iEYEARECAAYFAk6aRO8ACgkQ34Hwf+GwC4zPRwCfSkx4h6UaNFp0kRVTcaf/gfVB
+fasAn1J+GU+kWxMs9SpEaxBGjNWukW0B
+=BEq1
 -----END PGP SIGNATURE-----

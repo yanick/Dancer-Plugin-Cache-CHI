@@ -3,7 +3,7 @@ NAME
     (and anything else)
 
 VERSION
-    version 1.1.0
+    version 1.2.0
 
 SYNOPSIS
     In your configuration:
@@ -57,11 +57,17 @@ DESCRIPTION
     includes a mechanism to easily cache the response of routes.
 
 CONFIGURATION
-    The plugin's configuration is passed directly to the CHI object's
-    constructor. For example, the configuration given in the "SYNOPSIS" will
-    create a cache object equivalent to
+    Unrecognized configuration elements are passed directly to the CHI
+    object's constructor. For example, the configuration given in the
+    "SYNOPSIS" will create a cache object equivalent to
 
         $cache = CHI->new( driver => 'Memory', global => 1, );
+
+  honor_no_cache
+    If the parameter '"honor_no_cache"' is set to true, a request with the
+    http header '"Cache-Control"' or '"Pragma"' set to '*no-cache*' will
+    ignore any content cached via '"cache_page"' and will have the page
+    regenerated anew.
 
 KEYWORDS
   cache
@@ -75,8 +81,26 @@ KEYWORDS
     the same cached content. Caveat emptor.
 
   cache_page($content, $expiration)
-    Caches the *$content* to be served to subsequent requests. The
-    *$expiration* parameter is optional.
+    Caches the *$content* to be served to subsequent requests. The headers
+    and http status of the response are also cached.
+
+    The *$expiration* parameter is optional.
+
+  cache_page_key
+    Returns the cache key used by '"cache_page"'. Defaults to to the
+    request's *path_info*, but can be modified via
+    *cache_page_key_generator*.
+
+  cache_page_key_generator( \&sub )
+    Sets the function that generates the cache key for *cache_page*.
+
+    For example, to have the key contains both information about the
+    request's hostname and path_info (useful to deal with multi-machine
+    applications):
+
+        cache_page_key_generator sub {
+            return join ':", request()->host, request()->path_info;
+        };
 
   cache_set, cache_get, cache_remove, cache_clear, cache_compute
     Shortcut to the cache's object methods.
@@ -87,6 +111,20 @@ KEYWORDS
         };
 
     See the CHI documentation for further info on these methods.
+
+HOOKS
+  before_create_cache
+    Called before the creation of the cache, which is lazily done upon its
+    first use.
+
+    Useful, for example, to change the cache's configuration at run time:
+
+        use Sys::Hostname;
+
+        # set the namespace to the current hostname
+        hook before_create_cache => sub {
+            config->{plugins}{'Cache::CHI'}{namespace} = hostname;
+        };
 
 SEE ALSO
     Dancer Web Framework - Dancer

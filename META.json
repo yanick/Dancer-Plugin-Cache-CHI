@@ -4,7 +4,7 @@
       "Yanick Champoux <yanick@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.102345, CPAN::Meta::Converter version 2.101590",
+   "generated_by" : "Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112621",
    "license" : [
       "perl_5"
    ],
@@ -28,7 +28,13 @@
          "requires" : {
             "CHI" : 0,
             "Dancer" : "1.1904",
-            "Dancer::Plugin" : 0
+            "Dancer::Factory::Hook" : 0,
+            "Dancer::Hook" : 0,
+            "Dancer::Plugin" : 0,
+            "Dancer::Response" : 0,
+            "Dancer::SharedData" : 0,
+            "strict" : 0,
+            "warnings" : 0
          }
       },
       "test" : {
@@ -41,7 +47,7 @@
    "provides" : {
       "Dancer::Plugin::Cache::CHI" : {
          "file" : "lib/Dancer/Plugin/Cache/CHI.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.2.0"
       }
    },
    "release_status" : "stable",
@@ -53,11 +59,11 @@
       "homepage" : "http://search.cpan.org/dist/Dancer-Plugin-Cache-CHI/",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/yanick/Dancer-Plugin-Cache-CHI.git",
-         "web" : "http://github.com/yanick/Dancer-Plugin-Cache-CHI/tree"
+         "url" : "https://github.com/yanick/Dancer-Plugin-Cache-CHI.git",
+         "web" : "https://github.com/yanick/Dancer-Plugin-Cache-CHI"
       }
    },
-   "version" : "1.1.0",
-   "x_authority" : "cpan:yanick"
+   "version" : "1.2.0",
+   "x_authority" : "cpan:YANICK"
 }
 

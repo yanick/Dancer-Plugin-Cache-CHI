@@ -11,3 +11,6 @@ SIGNATURE
 lib/Dancer/Plugin/Cache/CHI.pm
 t/TestApp.pm
 t/basic.t
+t/honor-no-cache.t
+t/hooks.t
+t/key-gen.t

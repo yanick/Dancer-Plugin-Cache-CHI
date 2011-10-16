@@ -14,6 +14,8 @@ Revision history for Dancer::Plugin::Cache::CHI
  - new configuration option 'honor_no_cache' for client-side
     'Cache-Control: no-cache' or 'Pragma: no-cache'.
     (original patch and idea by Perlover)
+ - cache keys used by 'cache_page' can be customized via
+    'cache_page_key_generator'.
 
 
 1.1.0 2011-08-24

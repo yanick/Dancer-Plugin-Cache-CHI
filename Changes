@@ -4,6 +4,7 @@ Revision history for Dancer::Plugin::Cache::CHI
  [API CHANGES]
 
  [BUG FIXES]
+ - doc typo corrected (thanks Perlover!) [GH#7]
 
  [ENHANCEMENTS]
 

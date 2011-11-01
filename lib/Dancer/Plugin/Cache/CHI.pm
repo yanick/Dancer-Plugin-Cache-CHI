@@ -29,7 +29,7 @@ In your application:
     use Dancer::Plugin::Cache::CHI;
 
     # caching pages' response
-    
+
     check_page_cache;
 
     get '/cache_me' => sub {
@@ -134,7 +134,7 @@ sub _create_cache {
 
 If invoked, returns the cached response of a route, if available.
 
-The C<path_info> attribute of the request is used as the key for the route, 
+The C<path_info> attribute of the request is used as the key for the route,
 so the same route requested with different parameters will yield the same
 cached content. Caveat emptor.
 
@@ -147,7 +147,7 @@ register check_page_cache => sub {
         # some HTTP headers (X-Powered-By, Server)
 
         $DB::single = 1;
-        my $cached = cache()->get( $cache_page_key_generator->() ) 
+        my $cached = cache()->get( $cache_page_key_generator->() )
             or return;
 
         if ( $honor_no_cache ) {
@@ -203,15 +203,15 @@ register cache_page_key => sub {
     return $cache_page_key_generator->();
 };
 
-=head2 cache_page_key_generator( \&sub ) 
+=head2 cache_page_key_generator( \&sub )
 
-Sets the function that generates the cache key for I<cache_page>. 
+Sets the function that generates the cache key for I<cache_page>.
 
 For example, to have the key contains both information about the request's
 hostname and path_info (useful to deal with multi-machine applications):
 
     cache_page_key_generator sub {
-        return join ':", request()->host, request()->path_info;
+        return join ':', request()->host, request()->path_info;
     };
 
 =cut
@@ -231,7 +231,7 @@ Shortcut to the cache's object methods.
 
 See the L<CHI> documentation for further info on these methods.
 
-=cut 
+=cut
 
 for my $method ( qw/ set get remove clear compute / ) {
     register 'cache_'.$method => sub {
@@ -246,7 +246,7 @@ Dancer::Factory::Hook->instance->install_hooks(qw/ before_create_cache /);
 =head2 before_create_cache
 
 Called before the creation of the cache, which is lazily done upon
-its first use. 
+its first use.
 
 Useful, for example, to change the cache's configuration at run time:
 
@@ -257,7 +257,7 @@ Useful, for example, to change the cache's configuration at run time:
     hook before_create_cache => sub {
         config->{plugins}{'Cache::CHI'}{namespace} = hostname;
     };
-    
+
 =cut
 
 register_plugin;

@@ -12,6 +12,7 @@ use Dancer::Factory::Hook;
 use Dancer::Response;
 use Dancer::SharedData;
 
+use Carp;
 use CHI;
 
 =head1 SYNOPSIS
@@ -81,6 +82,8 @@ If the parameter 'C<honor_no_cache>' is set to true, a request with the http
 header 'C<Cache-Control>' or 'C<Pragma>' set to 'I<no-cache>' will ignore any
 content cached via 'C<cache_page>' and will have the page regenerated anew.
 
+
+
 =head1 KEYWORDS
 
 =head2 cache
@@ -115,16 +118,41 @@ register cache => sub {
     return $cache ||= _create_cache();
 };
 
+register create_cache_namespace => sub {
+    my $ns = shift;
+    my $args = shift;
+
+    my $cache;
+    my $caller = caller;
+    eval <<"END_EVAL";
+        sub ${caller}::${ns}_cache() {
+            return \$cache ||= _create_cache(\$ns, \$args);
+        };
+END_EVAL
+    die $@ if $@;
+};
+
+
 
 my $honor_no_cache = 0;
 sub _create_cache {
+    my $namespace = shift;
+    my $args = shift;
+
     Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
 
     my %setting = %{ plugin_setting() };
 
-    if ( exists $setting{honor_no_cache} ) {
-        $honor_no_cache = delete $setting{honor_no_cache};
+    $setting{namespace} = $namespace if defined $namespace;
+
+    if ( $args ) {
+        while( my ( $k, $v ) = each %$args ) {
+            $setting{$k} = $v;
+        }
     }
+
+    $honor_no_cache = delete $setting{honor_no_cache} 
+        if exists $setting{honor_no_cache};
 
     return CHI->new(%setting);
 }
@@ -239,6 +267,27 @@ for my $method ( qw/ set get remove clear compute / ) {
 }
 
 Dancer::Factory::Hook->instance->install_hooks(qw/ before_create_cache /);
+
+=head2 create_cache_namespace $namespace, \%args
+
+L<CHI> only allows one namespace per object. But you can create more caches
+by using I<create_cache_namespace>, which creates a new I<namespace>C<_cache>
+keyword.  The new cache uses the arguments as defined in the
+configuration, which values can be overriden by the optional arguments.
+
+    create_cache_namespace goldfish => { expires_in => 300 };
+    create_cache_namespace 'elephant';
+
+    # then later on...
+    
+    get '/memory' => sub {
+        elephant_cache->get( 'stuff' );
+    };
+
+Note that all the other keywords (C<cache_page>, C<cache_set>, etc) will still
+use the main cache object.
+
+=cut
 
 =head1 HOOKS
 

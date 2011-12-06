@@ -7,6 +7,7 @@ Revision history for Dancer::Plugin::Cache::CHI
  - doc typo corrected (thanks Perlover!) [GH#7]
 
  [ENHANCEMENTS]
+ - new 'create_cache_namespace' keyword
 
 1.2.0 2011-10-15
  [BUG FIXES]

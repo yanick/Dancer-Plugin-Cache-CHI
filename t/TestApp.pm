@@ -57,7 +57,7 @@ get '/expire_quick' => sub {
 };
 
 my $headers;
-before sub {
+hook before => sub {
     header 'X-Foo' => ++$headers;
 };
 

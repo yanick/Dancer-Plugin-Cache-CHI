@@ -141,12 +141,11 @@ cached content. Caveat emptor.
 =cut
 
 register check_page_cache => sub {
-    before sub {
+    hook before => sub {
         # Instead halt() now we use a more correct method - setting of a
         # response to Dancer::Response object for a more correct returning of
         # some HTTP headers (X-Powered-By, Server)
 
-        $DB::single = 1;
         my $cached = cache()->get( $cache_page_key_generator->() )
             or return;
 

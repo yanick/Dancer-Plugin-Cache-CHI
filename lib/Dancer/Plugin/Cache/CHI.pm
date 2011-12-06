@@ -82,17 +82,33 @@ If the parameter 'C<honor_no_cache>' is set to true, a request with the http
 header 'C<Cache-Control>' or 'C<Pragma>' set to 'I<no-cache>' will ignore any
 content cached via 'C<cache_page>' and will have the page regenerated anew.
 
-
-
 =head1 KEYWORDS
 
 =head2 cache
 
 Returns the L<CHI> cache object.
 
+=head2 cache $namespace, \%args
+
+L<CHI> only allows one namespace per object. But you can create more caches by
+using I<cache $namespave \%args>. The new cache uses the arguments as defined in
+the configuration, which values can be overriden by the optional arguments.
+
+    get '/memory' => sub {
+        cache('elephant')->get( 'stuff' );
+    };
+
+    get '/goldfish' => sub {
+        cache( 'goldfish' => { expires_in => 300 } )->get( 'stuff' );
+    };
+
+Note that all the other keywords (C<cache_page>, C<cache_set>, etc) will still
+use the main cache object.
+
 =cut
 
 my $cache;
+my %caches;     # For namespaces caches
 my $cache_page; # actually hold the ref to the args
 my $cache_page_key_generator = sub {
     return request()->{path_info};
@@ -115,26 +131,11 @@ hook after => sub {
 };
 
 register cache => sub {
-    return $cache ||= _create_cache();
+    return ($_[0] ? $caches{$_[0]} : $cache) ||= _create_cache( @_ );
 };
-
-register create_cache_namespace => sub {
-    my $ns = shift;
-    my $args = shift;
-
-    my $cache;
-    my $caller = caller;
-    eval <<"END_EVAL";
-        sub ${caller}::${ns}_cache() {
-            return \$cache ||= _create_cache(\$ns, \$args);
-        };
-END_EVAL
-    die $@ if $@;
-};
-
-
 
 my $honor_no_cache = 0;
+
 sub _create_cache {
     my $namespace = shift;
     my $args = shift;
@@ -151,7 +152,7 @@ sub _create_cache {
         }
     }
 
-    $honor_no_cache = delete $setting{honor_no_cache} 
+    $honor_no_cache = delete $setting{honor_no_cache}
         if exists $setting{honor_no_cache};
 
     return CHI->new(%setting);
@@ -267,27 +268,6 @@ for my $method ( qw/ set get remove clear compute / ) {
 }
 
 Dancer::Factory::Hook->instance->install_hooks(qw/ before_create_cache /);
-
-=head2 create_cache_namespace $namespace, \%args
-
-L<CHI> only allows one namespace per object. But you can create more caches
-by using I<create_cache_namespace>, which creates a new I<namespace>C<_cache>
-keyword.  The new cache uses the arguments as defined in the
-configuration, which values can be overriden by the optional arguments.
-
-    create_cache_namespace goldfish => { expires_in => 300 };
-    create_cache_namespace 'elephant';
-
-    # then later on...
-    
-    get '/memory' => sub {
-        elephant_cache->get( 'stuff' );
-    };
-
-Note that all the other keywords (C<cache_page>, C<cache_set>, etc) will still
-use the main cache object.
-
-=cut
 
 =head1 HOOKS
 

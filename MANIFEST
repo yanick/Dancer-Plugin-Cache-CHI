@@ -14,3 +14,4 @@ t/basic.t
 t/honor-no-cache.t
 t/hooks.t
 t/key-gen.t
+t/namespaces.t

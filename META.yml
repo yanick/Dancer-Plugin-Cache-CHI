@@ -9,7 +9,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112621'
+generated_by: 'Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112150'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -18,9 +18,10 @@ name: Dancer-Plugin-Cache-CHI
 provides:
   Dancer::Plugin::Cache::CHI:
     file: lib/Dancer/Plugin/Cache/CHI.pm
-    version: v1.2.0
+    version: v1.3.0
 requires:
   CHI: 0
+  Carp: 0
   Dancer: 1.1904
   Dancer::Factory::Hook: 0
   Dancer::Hook: 0
@@ -33,5 +34,5 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dancer-Plugin-Cache-CHI
   homepage: http://search.cpan.org/dist/Dancer-Plugin-Cache-CHI/
   repository: https://github.com/yanick/Dancer-Plugin-Cache-CHI.git
-version: 1.2.0
+version: 1.3.0
 x_authority: cpan:YANICK

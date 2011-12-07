@@ -19,13 +19,14 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Dancer-Plugin-Cache-CHI",
-  "dist_version" => "1.2.0",
+  "dist_version" => "1.3.0",
   "license" => "perl",
   "module_name" => "Dancer::Plugin::Cache::CHI",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
     "CHI" => 0,
+    "Carp" => 0,
     "Dancer" => "1.1904",
     "Dancer::Factory::Hook" => 0,
     "Dancer::Hook" => 0,

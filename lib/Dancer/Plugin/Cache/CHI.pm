@@ -3,7 +3,7 @@ BEGIN {
   $Dancer::Plugin::Cache::CHI::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Dancer::Plugin::Cache::CHI::VERSION = '1.2.0';
+  $Dancer::Plugin::Cache::CHI::VERSION = '1.3.0';
 }
 # ABSTRACT: Dancer plugin to cache response content (and anything else)
 
@@ -18,10 +18,11 @@ use Dancer::Factory::Hook;
 use Dancer::Response;
 use Dancer::SharedData;
 
+use Carp;
 use CHI;
 
 
-my $cache;
+my %cache;     
 my $cache_page; # actually hold the ref to the args
 my $cache_page_key_generator = sub {
     return request()->{path_info};
@@ -44,19 +45,27 @@ hook after => sub {
 };
 
 register cache => sub {
-    return $cache ||= _create_cache();
+    return  $cache{$_[0]} ||= _create_cache( @_ );
 };
 
-
 my $honor_no_cache = 0;
+
 sub _create_cache {
+    my $namespace = shift;
+    my $args = shift || {};
+
     Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
 
     my %setting = %{ plugin_setting() };
 
-    if ( exists $setting{honor_no_cache} ) {
-        $honor_no_cache = delete $setting{honor_no_cache};
+    $setting{namespace} = $namespace if defined $namespace;
+
+    while( my ( $k, $v ) = each %$args ) {
+        $setting{$k} = $v;
     }
+
+    $honor_no_cache = delete $setting{honor_no_cache}
+        if exists $setting{honor_no_cache};
 
     return CHI->new(%setting);
 }
@@ -64,13 +73,12 @@ sub _create_cache {
 
 
 register check_page_cache => sub {
-    before sub {
+    hook before => sub {
         # Instead halt() now we use a more correct method - setting of a
         # response to Dancer::Response object for a more correct returning of
         # some HTTP headers (X-Powered-By, Server)
 
-        $DB::single = 1;
-        my $cached = cache()->get( $cache_page_key_generator->() ) 
+        my $cached = cache()->get( $cache_page_key_generator->() )
             or return;
 
         if ( $honor_no_cache ) {
@@ -138,7 +146,7 @@ Dancer::Plugin::Cache::CHI - Dancer plugin to cache response content (and anythi
 
 =head1 VERSION
 
-version 1.2.0
+version 1.3.0
 
 =head1 SYNOPSIS
 
@@ -155,7 +163,7 @@ In your application:
     use Dancer::Plugin::Cache::CHI;
 
     # caching pages' response
-    
+
     check_page_cache;
 
     get '/cache_me' => sub {
@@ -213,11 +221,29 @@ content cached via 'C<cache_page>' and will have the page regenerated anew.
 
 Returns the L<CHI> cache object.
 
+=head2 cache $namespace, \%args
+
+L<CHI> only allows one namespace per object. But you can create more caches by
+using I<cache $namespace, \%args>. The new cache uses the arguments as defined in
+the configuration, which values can be overriden by the optional arguments
+(which are only used on the first invocation of the namespace).
+
+    get '/memory' => sub {
+        cache('elephant')->get( 'stuff' );
+    };
+
+    get '/goldfish' => sub {
+        cache( 'goldfish' => { expires_in => 300 } )->get( 'stuff' );
+    };
+
+Note that all the other keywords (C<cache_page>, C<cache_set>, etc) will still
+use the main cache object.
+
 =head2 check_page_cache
 
 If invoked, returns the cached response of a route, if available.
 
-The C<path_info> attribute of the request is used as the key for the route, 
+The C<path_info> attribute of the request is used as the key for the route,
 so the same route requested with different parameters will yield the same
 cached content. Caveat emptor.
 
@@ -234,15 +260,15 @@ Returns the cache key used by 'C<cache_page>'. Defaults to
 to the request's I<path_info>, but can be modified via
 I<cache_page_key_generator>.
 
-=head2 cache_page_key_generator( \&sub ) 
+=head2 cache_page_key_generator( \&sub )
 
-Sets the function that generates the cache key for I<cache_page>. 
+Sets the function that generates the cache key for I<cache_page>.
 
 For example, to have the key contains both information about the request's
 hostname and path_info (useful to deal with multi-machine applications):
 
     cache_page_key_generator sub {
-        return join ':", request()->host, request()->path_info;
+        return join ':', request()->host, request()->path_info;
     };
 
 =head2 cache_set, cache_get, cache_remove, cache_clear, cache_compute
@@ -261,7 +287,7 @@ See the L<CHI> documentation for further info on these methods.
 =head2 before_create_cache
 
 Called before the creation of the cache, which is lazily done upon
-its first use. 
+its first use.
 
 Useful, for example, to change the cache's configuration at run time:
 

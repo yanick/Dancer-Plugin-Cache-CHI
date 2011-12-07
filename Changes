@@ -1,6 +1,8 @@
 Revision history for Dancer::Plugin::Cache::CHI
 
 {{$NEXT}}
+
+1.3.0     2011-12-06
  [API CHANGES]
 
  [BUG FIXES]

@@ -91,8 +91,9 @@ Returns the L<CHI> cache object.
 =head2 cache $namespace, \%args
 
 L<CHI> only allows one namespace per object. But you can create more caches by
-using I<cache $namespave \%args>. The new cache uses the arguments as defined in
-the configuration, which values can be overriden by the optional arguments.
+using I<cache $namespace, \%args>. The new cache uses the arguments as defined in
+the configuration, which values can be overriden by the optional arguments
+(which are only used on the first invocation of the namespace).
 
     get '/memory' => sub {
         cache('elephant')->get( 'stuff' );
@@ -107,8 +108,7 @@ use the main cache object.
 
 =cut
 
-my $cache;
-my %caches;     # For namespaces caches
+my %cache;     
 my $cache_page; # actually hold the ref to the args
 my $cache_page_key_generator = sub {
     return request()->{path_info};
@@ -131,14 +131,14 @@ hook after => sub {
 };
 
 register cache => sub {
-    return ($_[0] ? $caches{$_[0]} : $cache) ||= _create_cache( @_ );
+    return  $cache{$_[0]} ||= _create_cache( @_ );
 };
 
 my $honor_no_cache = 0;
 
 sub _create_cache {
     my $namespace = shift;
-    my $args = shift;
+    my $args = shift || {};
 
     Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
 
@@ -146,10 +146,8 @@ sub _create_cache {
 
     $setting{namespace} = $namespace if defined $namespace;
 
-    if ( $args ) {
-        while( my ( $k, $v ) = each %$args ) {
-            $setting{$k} = $v;
-        }
+    while( my ( $k, $v ) = each %$args ) {
+        $setting{$k} = $v;
     }
 
     $honor_no_cache = delete $setting{honor_no_cache}

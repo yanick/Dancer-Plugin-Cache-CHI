@@ -1,3 +1,4 @@
+AUTHOR_PLEDGE
 Build.PL
 Changes
 INSTALL
@@ -9,9 +10,11 @@ README
 README.mkdn
 SIGNATURE
 lib/Dancer/Plugin/Cache/CHI.pm
+t/00-compile.t
 t/TestApp.pm
 t/basic.t
 t/honor-no-cache.t
 t/hooks.t
 t/key-gen.t
 t/namespaces.t
+xt/release/unused-vars.t

@@ -8,6 +8,7 @@ use Module::Build 0.3601;
 my %module_build_args = (
   "build_requires" => {
     "Dancer::Test" => 0,
+    "File::Find" => 0,
     "Module::Build" => "0.3601",
     "Test::More" => 0
   },
@@ -19,7 +20,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Dancer-Plugin-Cache-CHI",
-  "dist_version" => "1.3.0",
+  "dist_version" => "1.3.1",
   "license" => "perl",
   "module_name" => "Dancer::Plugin::Cache::CHI",
   "recommends" => {},

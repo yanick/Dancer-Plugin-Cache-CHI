@@ -3,7 +3,7 @@ BEGIN {
   $Dancer::Plugin::Cache::CHI::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Dancer::Plugin::Cache::CHI::VERSION = '1.3.0';
+  $Dancer::Plugin::Cache::CHI::VERSION = '1.3.1';
 }
 # ABSTRACT: Dancer plugin to cache response content (and anything else)
 
@@ -84,8 +84,11 @@ register check_page_cache => sub {
         if ( $honor_no_cache ) {
             my $req =  Dancer::SharedData->request;
 
-            return if $req->header('Cache-Control') eq 'no-cache'
-                   or $req->header('Pragma')        eq 'no-cache';
+            return if grep { 
+                # eval is there to protect from a regression in Dancer 1.31
+                # where headers can be undef
+                eval { $req->header($_) } eq 'no-cache' 
+            } qw/ Cache-Control Pragma /;
         }
 
         Dancer::SharedData->response(
@@ -146,7 +149,7 @@ Dancer::Plugin::Cache::CHI - Dancer plugin to cache response content (and anythi
 
 =head1 VERSION
 
-version 1.3.0
+version 1.3.1
 
 =head1 SYNOPSIS
 

@@ -1,16 +1,19 @@
 Revision history for Dancer::Plugin::Cache::CHI
 
 {{$NEXT}}
-
-1.3.0     2011-12-06
  [API CHANGES]
 
+ [BUG FIXES]
+ - working around regression in Dancer 1.31
+
+ [ENHANCEMENTS]
+
+1.3.0 2011-12-06
  [BUG FIXES]
  - doc typo corrected (thanks Perlover!) [GH#7]
 
  [ENHANCEMENTS]
- - cache namespaces support now provided. [GH#8]
-    Patch by Perlover.
+ - cache namespaces support now provided. [GH#8] Patch by Perlover.
 
 1.2.0 2011-10-15
  [BUG FIXES]

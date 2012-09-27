@@ -179,8 +179,11 @@ register check_page_cache => sub {
         if ( $honor_no_cache ) {
             my $req =  Dancer::SharedData->request;
 
-            return if $req->header('Cache-Control') eq 'no-cache'
-                   or $req->header('Pragma')        eq 'no-cache';
+            return if grep { 
+                # eval is there to protect from a regression in Dancer 1.31
+                # where headers can be undef
+                eval { $req->header($_) } eq 'no-cache' 
+            } qw/ Cache-Control Pragma /;
         }
 
         Dancer::SharedData->response(

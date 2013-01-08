@@ -1,16 +1,22 @@
 package TestApp;
 
+use 5.10.0;
+
 use strict;
 use warnings;
 no warnings qw/ uninitialized /;
 
 use lib 't';
 
-use Dancer qw/:syntax :tests/;
+use Test::More;
+
+use Dancer qw/:tests/;
 use Dancer::Plugin::Cache::CHI;
 
 use Dancer::Test;
-use Test::More;
+
+my $api_version = int Dancer->VERSION;
+
 
 set plugins => {
     'Cache::CHI' => { 
@@ -23,26 +29,44 @@ set plugins => {
 
 check_page_cache;
 
-my $i;
 get '/cached' => sub {
+    state $i;
     return cache_page ++$i;
 };
 
-plan tests => 6;
+plan tests => 4;
 
-response_content_is '/cached' => 1, 'initial hit';
-response_content_is '/cached' => 1, 'cached';
+my $counter = 0;
 
-my $resp = dancer_response 'GET' => '/cached', {
-    headers => [ qw/ Cache-Control no-cache / ],
-};
+response_content_is '/cached' => ++$counter, 'initial hit';
+response_content_is '/cached' => $counter, 'cached';
 
-response_content_is $resp => 2, 'Cache-Control: no-cache';
-response_content_is '/cached' => 2, 'cached again';
+subtest $_ => sub {
+    plan tests => 2;
 
-$resp = dancer_response 'GET' => '/cached', {
-    headers => [ qw/ Pragma no-cache / ],
-};
+    my $resp = non_cached_request($_);
 
-response_content_is $resp => 3, 'Pragma: no-cache';
-response_content_is '/cached' => 3, 'cached again';
+    response_content_is $resp => ++$counter, "$_: no-cache";
+    response_content_is '/cached' => $counter, 'cached again';
+
+} for qw/ Cache-Control Pragma /;
+
+
+sub non_cached_request {
+    my $header = $_;
+
+    if ( $api_version < 2 ) {
+        return dancer_response 'GET' => '/cached', {
+            headers => [ $header => 'no-cache' ],
+        };
+    }
+
+    my $request = Dancer::Core::Request->new(
+        method => 'GET',
+        path => '/cached',
+    );
+
+    $request->header( $header => 'no-cache' );
+
+    return dancer_response $request;
+}

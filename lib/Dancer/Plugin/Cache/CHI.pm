@@ -7,8 +7,6 @@ no warnings qw/ uninitialized /;
 
 use Dancer 1.1904 ':syntax';
 
-my $dancer_version = int Dancer->VERSION;
-
 use Carp;
 use CHI;
 
@@ -16,17 +14,10 @@ use Dancer::Plugin;
 
 use Moo;
 
-if ( $dancer_version < 2 ) {
-    require Dancer::Hook;
-    require Dancer::Factory::Hook;
-    require Dancer::Response;
-    require Dancer::SharedData;
-}
-else {
-    with 'Dancer::Plugin';
-
-    register_hook 'before_create_cache';
-}
+use Dancer::Hook;
+use Dancer::Factory::Hook;
+use Dancer::Response;
+use Dancer::SharedData;
 
 =head1 SYNOPSIS
 
@@ -144,7 +135,6 @@ hook after => sub {
 };
 
 register cache => sub {
-    shift if $dancer_version >= 2;
     return  $cache{$_[0]//''} ||= _create_cache( @_ );
 };
 
@@ -154,12 +144,7 @@ sub _create_cache {
     my $namespace = shift;
     my $args = shift || {};
 
-    if ( $dancer_version < 2 ) {
-        Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
-    }
-    else {
-        execute_hook 'before_create_cache';
-    }
+    Dancer::Factory::Hook->execute_hooks( 'before_create_cache' );
 
     my %setting = %{ plugin_setting() };
 
@@ -187,11 +172,8 @@ cached content. Caveat emptor.
 =cut
 
 register check_page_cache => sub {
-    shift if $dancer_version >= 2;
 
     my $hook = sub {
-        my $dsl = shift if $dancer_version >= 2;
-
         # Instead halt() now we use a more correct method - setting of a
         # response to Dancer::Response object for a more correct returning of
         # some HTTP headers (X-Powered-By, Server)
@@ -200,12 +182,7 @@ register check_page_cache => sub {
             or return;
 
         if ( $honor_no_cache ) {
-            $DB::single = 1;
-
-            my $req =  $dancer_version >=2  
-                    ? $dsl->request
-                    : Dancer::SharedData->request
-                    ;
+            my $req =  Dancer::SharedData->request;
 
             return if grep { 
                 # eval is there to protect from a regression in Dancer 1.31
@@ -214,36 +191,19 @@ register check_page_cache => sub {
             } qw/ Cache-Control Pragma /;
         }
 
-        if ( $dancer_version < 2 ) {
-            Dancer::SharedData->response(
-                Dancer::Response->new(
-                    ref $cached eq 'HASH'
-                    ?
-                    (
-                        status       => $cached->{status},
-                        headers      => $cached->{headers},
-                        content      => $cached->{content}
-                    )
-                    :
-                    ( content => $cached )
+        Dancer::SharedData->response(
+            Dancer::Response->new(
+                ref $cached eq 'HASH'
+                ?
+                (
+                    status       => $cached->{status},
+                    headers      => $cached->{headers},
+                    content      => $cached->{content}
                 )
-            );
-        } else {
-            $dsl->response(
-                Dancer::Core::Response->new(
-                    is_halted => 1,
-                    ref $cached eq 'HASH'
-                    ?
-                    (
-                        status       => $cached->{status},
-                        headers      => $cached->{headers},
-                        content      => $cached->{content}
-                    )
-                    :
-                    ( content => $cached )
-                )
-            );
-        }
+                :
+                ( content => $cached )
+            )
+        );
     };
 
     hook before => $hook;
@@ -259,8 +219,6 @@ The I<$expiration> parameter is optional.
 =cut
 
 register cache_page => sub {
-    shift if $dancer_version >= 2;
-
     my ( $content, @args ) = @_;
 
     $cache_page = \@args;
@@ -278,7 +236,6 @@ I<cache_page_key_generator>.
 
 
 register cache_page_key => sub {
-    shift if $dancer_version >= 2;
     return $cache_page_key_generator->();
 };
 
@@ -296,7 +253,6 @@ hostname and path_info (useful to deal with multi-machine applications):
 =cut
 
 register cache_page_key_generator => sub {
-    shift if $dancer_version >= 2;
     $cache_page_key_generator = shift;
 };
 
@@ -315,13 +271,11 @@ See the L<CHI> documentation for further info on these methods.
 
 for my $method ( qw/ set get remove clear compute / ) {
     register 'cache_'.$method => sub {
-        shift if $dancer_version >= 2;
         return cache()->$method( @_ );
     }
 }
 
-Dancer::Factory::Hook->instance->install_hooks(qw/ before_create_cache /)
-    if $dancer_version < 2;
+Dancer::Factory::Hook->instance->install_hooks(qw/ before_create_cache /);
 
 =head1 HOOKS
 
@@ -342,7 +296,7 @@ Useful, for example, to change the cache's configuration at run time:
 
 =cut
 
-register_plugin for_versions => [1,2];
+register_plugin;
 
 __END__
 
@@ -353,5 +307,7 @@ Dancer Web Framework - L<Dancer>
 L<CHI>
 
 L<Dancer::Plugin::Memcached> - plugin that heavily inspired this one.
+
+L<Dancer2::Plugin::Cache::CHI> - Dancer2 incarnation of this plugin.
 
 =cut

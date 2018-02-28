@@ -14,7 +14,6 @@ use Dancer::Plugin;
 
 use Moo;
 
-use Dancer::Hook;
 use Dancer::Factory::Hook;
 use Dancer::Response;
 use Dancer::SharedData;

@@ -5,7 +5,7 @@ use strict;
 use warnings;
 no warnings qw/ uninitialized /;
 
-use Dancer 1.1904 ':syntax';
+use Dancer 1.32 ':syntax';
 
 use Carp;
 use CHI;
@@ -171,9 +171,21 @@ cached content. Caveat emptor.
 
 =cut
 
+sub should_skip_cache {
+    return unless $honor_no_cache;
+
+    my $req =  Dancer::SharedData->request;
+
+    no warnings 'uninitialized';
+
+    return scalar grep { 
+        $req->header($_) eq 'no-cache'
+    } qw/ Cache-Control Pragma /;
+}
+
 register check_page_cache => sub {
 
-    my $hook = sub {
+    hook before => sub {
         # Instead halt() now we use a more correct method - setting of a
         # response to Dancer::Response object for a more correct returning of
         # some HTTP headers (X-Powered-By, Server)
@@ -181,15 +193,7 @@ register check_page_cache => sub {
         my $cached = cache()->get( $cache_page_key_generator->() )
             or return;
 
-        if ( $honor_no_cache ) {
-            my $req =  Dancer::SharedData->request;
-
-            return if grep { 
-                # eval is there to protect from a regression in Dancer 1.31
-                # where headers can be undef
-                eval { $req->header($_) eq 'no-cache' }
-            } qw/ Cache-Control Pragma /;
-        }
+        return if should_skip_cache();
 
         Dancer::SharedData->response(
             Dancer::Response->new(
@@ -206,7 +210,6 @@ register check_page_cache => sub {
         );
     };
 
-    hook before => $hook;
 };
 
 =head2 cache_page($content, $expiration)

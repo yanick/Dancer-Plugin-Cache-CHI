@@ -8,3 +8,4 @@ tmp$
 MANIFEST.SKIP
 Dancer-Plugin-Cache
 .gitignore
+.appveyor.yml

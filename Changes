@@ -8,6 +8,9 @@ Revision history for Dancer::Plugin::Cache::CHI
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - remove dead Dancer2 code.
+ - bump Dancer dependency to a more recent version.
+ - minor refactoring.
 
  [NEW FEATURES]
 
